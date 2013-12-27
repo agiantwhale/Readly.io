@@ -1,25 +1,37 @@
-.navbar .nav>li>a.brand {
-    padding-left:20px;
-    margin-left:0
+* {
+    font-family: 'Average Sans', sans-serif;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.pull-left {
+    float: left !important;
 }
 
 .content {
-    margin-top:50px;
-    width:100%
+    margin: 0 auto;
+    padding: 1em;
+    max-width: 1000px;
 }
 
+/*
 footer {
-    position:fixed;
-    left:0px;
-    bottom:0px;
-    height:30px;
-    width:100%;
-    background:#ddd;
-    -webkit-box-shadow:0 8px 6px 6px black;
-    -moz-box-shadow:0 8px 6px 6px black;
-    box-shadow:0 8px 6px 6px black
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 30px;
+    width: 100%;
+    background: #ddd;
+    -webkit-box-shadow: 0 8px 6px 6px black;
+    -moz-box-shadow: 0 8px 6px 6px black;
+    box-shadow: 0 8px 6px 6px black
 }
+*/
 
 footer p {
-    padding:5px 0 12px 10px
+    text-align: center;
+    color: gray;
+    font-size: 0.7em;
 }

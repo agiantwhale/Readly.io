@@ -1,0 +1,26 @@
+.intro {
+    margin-top: 100px;
+    min-height: 300px;
+}
+
+.intro>p {
+    color: gray;
+}
+
+.info {
+    background-color: #CBEDFF;
+    min-height: 300px;
+}
+
+.info>div {
+    width: 100%;
+    text-align: center;
+}
+
+.infocon {
+    font-size: 3em;
+}
+
+.faq {
+    margin-top: 50px;
+}

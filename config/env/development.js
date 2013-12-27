@@ -3,7 +3,7 @@
 module.exports = {
     db: "mongodb://localhost/mean-dev",
     app: {
-        name: "MEAN - A Modern Stack - Development"
+        name: "ReadAgain"
     },
     facebook: {
         clientID: "APP_ID",
@@ -11,8 +11,8 @@ module.exports = {
         callbackURL: "http://localhost:3000/auth/facebook/callback"
     },
     twitter: {
-        clientID: "CONSUMER_KEY",
-        clientSecret: "CONSUMER_SECRET",
+        clientID: "5pPUdA7wN4fOjgpQyntw",
+        clientSecret: "rPrvoNVDj8CbwhTHqfZ94BnoFkwzRraxGyPWPxasE0",
         callbackURL: "http://localhost:3000/auth/twitter/callback"
     },
     github: {
