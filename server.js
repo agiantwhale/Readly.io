@@ -58,6 +58,8 @@ var port = process.env.PORT || config.port;
 app.listen(port);
 console.log('Express app started on port ' + port);
 
+require('./config/twitter_stream').initForAll();
+
 //Initializing logger
 logger.init(app, passport, mongoose);
 

@@ -19,12 +19,13 @@ module.exports = function(passport) {
     passport.deserializeUser(function(id, done) {
         User.findOne({
             _id: id
-        }, '-salt -hashed_password', function(err, user) {
+        }, function(err, user) {
             done(err, user);
         });
     });
 
     //Use local strategy
+    /*
     passport.use(new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password'
@@ -50,6 +51,7 @@ module.exports = function(passport) {
             });
         }
     ));
+    */
 
     //Use twitter strategy
     passport.use(new TwitterStrategy({
@@ -59,7 +61,7 @@ module.exports = function(passport) {
         },
         function(token, tokenSecret, profile, done) {
             User.findOne({
-                'twitter.id_str': profile.id
+                'twitter.profile.id_str': profile.id
             }, function(err, user) {
                 if (err) {
                     return done(err);
@@ -69,7 +71,11 @@ module.exports = function(passport) {
                         name: profile.displayName,
                         username: profile.username,
                         provider: 'twitter',
-                        twitter: profile._json
+                        twitter: {
+                            token: token,
+                            tokenSecret: tokenSecret,
+                            profile: profile._json
+                        }
                     });
                     user.save(function(err) {
                         if (err) console.log(err);
@@ -83,6 +89,7 @@ module.exports = function(passport) {
     ));
 
     //Use facebook strategy
+    /*
     passport.use(new FacebookStrategy({
             clientID: config.facebook.clientID,
             clientSecret: config.facebook.clientSecret,
@@ -171,4 +178,5 @@ module.exports = function(passport) {
             });
         }
     ));
+*/
 };

@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Auth callback
+ * User has finished logging in/signing up
  */
 exports.authCallback = function(req, res) {
     res.redirect('/');
@@ -59,12 +60,12 @@ exports.create = function(req, res, next) {
     user.save(function(err) {
         if (err) {
             switch (err.code) {
-                case 11000:
-                case 11001:
-                    message = 'Username already exists';
-                    break;
-                default:
-                    message = 'Please fill all the required fields';
+            case 11000:
+            case 11001:
+                message = 'Username already exists';
+                break;
+            default:
+                message = 'Please fill all the required fields';
             }
 
             return res.render('users/signup', {
@@ -90,14 +91,12 @@ exports.me = function(req, res) {
  * Find user by id
  */
 exports.user = function(req, res, next, id) {
-    User
-        .findOne({
-            _id: id
-        })
-        .exec(function(err, user) {
-            if (err) return next(err);
-            if (!user) return next(new Error('Failed to load User ' + id));
-            req.profile = user;
-            next();
-        });
+    User.findOne({
+        _id: id
+    }).exec(function(err, user) {
+        if (err) return next(err);
+        if (!user) return next(new Error('Failed to load User ' + id));
+        req.profile = user;
+        next();
+    });
 };
