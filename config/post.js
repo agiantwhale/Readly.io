@@ -20,6 +20,9 @@ function unitToMilliseconds(unitString, num) {
     case "h":
         unitString="hours";
         break;
+    case "s":
+        unitString="seconds";
+        break;
     default:
         unitString="days";
         break;
