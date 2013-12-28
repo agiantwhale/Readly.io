@@ -46,7 +46,7 @@ function validateURL(textval) {
 }
 
 PostSchema.post('save', function(post) {
-    this.findOne(post).populate('user').exec(function(err, post){
+    mongoose.model('Post').findOne(post).populate('user').exec(function(err, post){
         if(err) console.log(err);
         schedules.addJob(post);
     });
