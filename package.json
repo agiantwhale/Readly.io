@@ -37,7 +37,8 @@
     "grunt": "latest",
     "grunt-cli": "latest",
     "grunt-env": "latest",
-    "twitter": "~0.2.5"
+    "twitter": "~0.2.5",
+    "forever": "~0.10.11"
   },
   "devDependencies": {
     "supertest": "latest",
