@@ -9,15 +9,13 @@ module.exports = function(app, passport, auth) {
     app.get('/users/me', users.me);
 
     //Setting up the users api
-    //app.post('/users', users.create);
+    app.post('/users', users.create);
 
     //Setting the local strategy route
-    /*
     app.post('/users/session', passport.authenticate('local', {
         failureRedirect: '/',
         failureFlash: true
     }), users.session);
-    */
 
     //Setting the facebook oauth routes
     /*
@@ -83,4 +81,5 @@ module.exports = function(app, passport, auth) {
     //Home route
     var index = require('../app/controllers/index');
     app.get('/', index.render);
+
 };
