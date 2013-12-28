@@ -25,7 +25,7 @@ module.exports = function(passport) {
     });
 
     //Use local strategy
-    /*
+/*
     passport.use(new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password'
@@ -55,41 +55,42 @@ module.exports = function(passport) {
 
     //Use twitter strategy
     passport.use(new TwitterStrategy({
-            consumerKey: config.twitter.clientID,
-            consumerSecret: config.twitter.clientSecret,
-            callbackURL: config.twitter.callbackURL
-        },
-        function(token, tokenSecret, profile, done) {
-            User.findOne({
-                'twitter.profile.id_str': profile.id
-            }, function(err, user) {
-                if (err) {
-                    return done(err);
-                }
-                if (!user) {
-                    user = new User({
-                        name: profile.displayName,
-                        username: profile.username,
-                        provider: 'twitter',
-                        twitter: {
-                            token: token,
-                            tokenSecret: tokenSecret,
-                            profile: profile._json
-                        }
-                    });
-                    user.save(function(err) {
-                        if (err) console.log(err);
-                        return done(err, user);
-                    });
-                } else {
-                    return done(err, user);
-                }
+        consumerKey: config.twitter.clientID,
+        consumerSecret: config.twitter.clientSecret,
+        callbackURL: config.twitter.callbackURL
+    }, function(token, tokenSecret, profile, done) {
+        User.findOne({
+            'twitter.profile.id_str': profile.id
+        }, function(err, user) {
+            if (err) {
+                return done(err);
+            }
+            if (!user) {
+                user = new User({
+                    name: profile.displayName,
+                    username: profile.username,
+                    provider: 'twitter',
+                    twitter: {
+                        token: token,
+                        tokenSecret: tokenSecret,
+                        profile: profile._json
+                    }
+                });
+            } else {
+                user.twitter.token = token;
+                user.twitter.tokenSecret = tokenSecret;
+            }
+
+            user.save(function(err) {
+                if (err) console.log(err);
+                return done(err, user);
             });
-        }
-    ));
+            return done(err, user);
+        });
+    }));
 
     //Use facebook strategy
-    /*
+/*
     passport.use(new FacebookStrategy({
             clientID: config.facebook.clientID,
             clientSecret: config.facebook.clientSecret,

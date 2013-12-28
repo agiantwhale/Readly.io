@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
     moment = require('moment'),
     config = require('./config');
 
-function unitToMilliseconds(unitString, num) {
+function unitToDate(unitString, num) {
     var returnDate = moment();
     switch (unitString) {
     case "y":
@@ -65,7 +65,7 @@ module.exports = function(urls, hashtags, user) {
             var post = new Post({
                 url: url,
                 user: user,
-                next_reminder: unitToMilliseconds(dateString[0], parseInt(dateString.slice(1, dateString.length).split("").reverse().join("")))
+                next_reminder: unitToDate(dateString[0], parseInt(dateString.slice(1, dateString.length).split("").reverse().join("")))
             });
 
             post.save(function(err){
