@@ -5,7 +5,6 @@
  */
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    crypto = require('crypto'),
     authTypes = ['github', 'twitter', 'facebook', 'google'],
     twitter_stream = require('../../config/twitter_stream');
 
@@ -33,7 +32,7 @@ var UserSchema = new Schema({
 });
 
 UserSchema.statics.initStreams = function() {
-    User.find({}, function(err, users) {
+    this.find({}, function(err, users) {
         users.forEach(twitter_stream.openStream);
     });
 };

@@ -59,8 +59,8 @@ app.listen(port);
 console.log('Express app started on port ' + port);
 
 // initialize Streams/Jobs/Whatnot
-mongoose('User').initStreams();
-mongoose('Post').initJobs();
+mongoose.model('User').initStreams();
+mongoose.model('Post').initJobs();
 
 //Initializing logger
 logger.init(app, passport, mongoose);

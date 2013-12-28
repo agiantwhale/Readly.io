@@ -1,8 +1,6 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    User = mongoose.model('User'),
-    config = require('./config'),
+var config = require('./config'),
     twitter = require('twitter'),
     process = require('./post');
 

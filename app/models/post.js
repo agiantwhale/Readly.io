@@ -54,7 +54,7 @@ PostSchema.post('delete', function(post) {
 });
 
 PostSchema.statics.initJobs = function() {
-    Post.find({}, function(err, posts) {
+    this.find({}, function(err, posts) {
         posts.forEach(function(post) {
             if (post.next_reminder > Date.now()) {
                 schedules.addJob(post);
