@@ -59,7 +59,6 @@ module.exports = function(urls, hashtags, user) {
         for (var iter = 0; iter < urls.length; iter++) {
             var url = urls[iter];
 
-            /*
             var post = new Post({
                 url: url,
                 user: user,
@@ -68,7 +67,7 @@ module.exports = function(urls, hashtags, user) {
 
             post.save(function(err){
                 if(err) console.log(err);
-            }); */
+            });
         }
     }
 };
