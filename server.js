@@ -53,13 +53,11 @@ require('./config/express')(app, passport, db);
 //Bootstrap routes
 require('./config/routes')(app, passport, auth);
 
-/*
 // initialize Streams/Jobs/Whatnot
 console.log('Initializing Streams...');
 mongoose.model('User').initStreams();
 console.log('Initializing Jobs...');
 mongoose.model('Post').initJobs();
-*/
 
 //Start the app by listening on <port>
 var port = process.env.PORT || config.port;
