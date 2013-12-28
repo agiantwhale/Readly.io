@@ -54,8 +54,9 @@ require('./config/express')(app, passport, db);
 require('./config/routes')(app, passport, auth);
 
 // initialize Streams/Jobs/Whatnot
-console.log('Initializing Streams and Jobs...');
+console.log('Initializing Streams...');
 mongoose.model('User').initStreams();
+console.log('Initializing Jobs...');
 mongoose.model('Post').initJobs();
 
 //Start the app by listening on <port>
