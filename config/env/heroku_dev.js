@@ -20,7 +20,7 @@ module.exports = {
     twitter: {
         clientID: "5pPUdA7wN4fOjgpQyntw",
         clientSecret: "rPrvoNVDj8CbwhTHqfZ94BnoFkwzRraxGyPWPxasE0",
-        callbackURL: "http://readagain-dev.herokuapp.com/auth/twitter/callback"
+        callbackURL: "http://readagain.herokuapp.com//auth/twitter/callback"
     },
     github: {
         clientID: "APP_ID",

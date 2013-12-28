@@ -7,10 +7,8 @@
     "angular-cookies": "latest",
     "angular-mocks": "latest",
     "angular-route": "latest",
-    "bootstrap": "latest",
-    "angular-bootstrap": "latest",
-    "angular-ui-utils": "latest",
-    "pure": "~0.3.0",
-    "font-awesome": "~4.0.3"
+    "bootstrap": "2.3.2",
+    "angular-bootstrap": "0.7.0",
+    "angular-ui-utils": "0.0.4"
   }
 }

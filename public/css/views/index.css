@@ -1,10 +1,8 @@
 .intro {
     padding-top: 100px;
     min-height: 350px;
-    /*
     background-image: url('/img/background/intro.png');
     background-size: cover;
-    */
 }
 
 .intro_box {
