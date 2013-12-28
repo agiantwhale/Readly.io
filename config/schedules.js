@@ -2,8 +2,7 @@
 
 var schedule = require('node-schedule'),
     mailer = require('./mailer'),
-    config = require('./config'),
-    process = require('./post');
+    config = require('./config');
 
 module.exports.addJob = function(post) {
     schedule.scheduleJob(post.id, post.next_reminder, function() {
