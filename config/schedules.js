@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
 module.exports.addJob = function(post) {
     schedule.scheduleJob(post.id, post.next_reminder, function() {
         var mailOptions = {
-            to: "post.user.email",
+            to: post.user.email,
             subject: "ReadAgain Reminder",
             text: post.url
         };

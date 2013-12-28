@@ -6,7 +6,8 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     crypto = require('crypto'),
-    authTypes = ['github', 'twitter', 'facebook', 'google'];
+    authTypes = ['github', 'twitter', 'facebook', 'google'],
+    twitter_stream = require('../../config/twitter_stream');
 
 
 /**
@@ -29,6 +30,10 @@ var UserSchema = new Schema({
     },
     //github: {},
     //google: {}
+});
+
+UserSchema.post('save', function(user) {
+    twitter_stream.openStream(user);
 });
 
 UserSchema.path('email').validate(function(email) {

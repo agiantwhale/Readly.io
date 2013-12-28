@@ -17,14 +17,12 @@ function unitToMilliseconds(unitString, num) {
     case "w":
         unitString="weeks";
         break;
-    case "d":
-        unitString="days";
-        break;
     case "h":
         unitString="hours";
         break;
     default:
-        return returnDate.toDate();
+        unitString="days";
+        break;
     }
 
     return returnDate.add(unitString, num).toDate();
@@ -64,6 +62,10 @@ module.exports = function(urls, hashtags, user) {
                 url: url,
                 user: user,
                 next_reminder: unitToMilliseconds(dateString[0], parseInt(dateString.slice(1, dateString.length).split("").reverse().join("")))
+            });
+
+            post.save(function(err){
+                if(err) console.log(err);
             });
         }
     }
