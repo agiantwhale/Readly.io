@@ -38,7 +38,10 @@
     "grunt-cli": "latest",
     "grunt-env": "latest",
     "twitter": "~0.2.5",
-    "forever": "~0.10.11"
+    "forever": "~0.10.11",
+    "nodemailer": "~0.5.15",
+    "node-schedule": "~0.1.13",
+    "moment": "~2.5.0"
   },
   "devDependencies": {
     "supertest": "latest",

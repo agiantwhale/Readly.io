@@ -53,15 +53,24 @@ require('./config/express')(app, passport, db);
 //Bootstrap routes
 require('./config/routes')(app, passport, auth);
 
+// initialize Streams/Jobs/Whatnot
+console.log('Initializing Streams...');
+mongoose.model('User').initStreams();
+console.log('Initializing Jobs...');
+mongoose.model('Post').initJobs();
+
 //Start the app by listening on <port>
 var port = process.env.PORT || config.port;
 app.listen(port);
 console.log('Express app started on port ' + port);
 
-require('./config/twitter_stream').initForAll();
-
 //Initializing logger
 logger.init(app, passport, mongoose);
+
+//Logger
+process.on('uncaughtException', function (err) {
+  console.log('Caught exception: ' + err);
+});
 
 //expose app
 exports = module.exports = app;

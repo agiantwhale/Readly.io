@@ -1,8 +1,6 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    User = mongoose.model('User'),
-    config = require('./config'),
+var config = require('./config'),
     twitter = require('twitter'),
     process = require('./post');
 
@@ -35,11 +33,5 @@ module.exports.openStream = function(user) {
                 process(urls, hashtags, user);
             }
         });
-    });
-};
-
-module.exports.initForAll = function() {
-    User.find({}, function(err, users) {
-        users.forEach(module.exports.openStream);
     });
 };
