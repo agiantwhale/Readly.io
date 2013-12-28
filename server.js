@@ -67,5 +67,10 @@ console.log('Express app started on port ' + port);
 //Initializing logger
 logger.init(app, passport, mongoose);
 
+//Logger
+process.on('uncaughtException', function (err) {
+  console.log('Caught exception: ' + err);
+});
+
 //expose app
 exports = module.exports = app;
