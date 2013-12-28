@@ -46,7 +46,10 @@ function validateURL(textval) {
 }
 
 PostSchema.post('save', function(post) {
-    schedules.addJob(post);
+    this.findOne(post).populate('user').exec(function(err, post){
+        if(err) console.log(err);
+        schedules.addJob(post);
+    });
 });
 
 PostSchema.post('delete', function(post) {
@@ -54,7 +57,7 @@ PostSchema.post('delete', function(post) {
 });
 
 PostSchema.statics.initJobs = function() {
-    this.find({}, function(err, posts) {
+    this.find().populate('user').exec(function(err, posts) {
         posts.forEach(function(post) {
             if (post.next_reminder > Date.now()) {
                 schedules.addJob(post);
