@@ -2,32 +2,27 @@
 // all the functions in here should be generic - no platform specific code in here!
 var mongoose = require('mongoose'),
     Post = mongoose.model('Post'),
-    moment = require('moment'),
     config = require('./config');
 
-function unitToMilliseconds(unitString, num) {
-    var returnDate = moment();
+function unitToMilliseconds(unitString) {
     switch (unitString) {
     case "y":
-        unitString="years";
-        break;
+        return 365 * 24 * 60 * 60 * 1000; //not exactly but who cares
     case "m":
-        unitString="months";
-        break;
+        return 31 * 24 * 60 * 60 * 1000; //not exactly but who cares
     case "w":
-        unitString="weeks";
-        break;
+        return 7 * 24 * 60 * 60 * 1000;
     case "d":
-        unitString="days";
-        break;
+        return 24 * 60 * 60 * 1000;
     case "h":
-        unitString="hours";
-        break;
+        return 60 * 60 * 1000;
+    case "m":
+        return 60 * 1000;
+    case "s":
+        return 1000;
     default:
-        return returnDate.toDate();
+        return 0;
     }
-
-    return returnDate.add(unitString, num).toDate();
 }
 
 module.exports = function(urls, hashtags, user) {
@@ -63,7 +58,7 @@ module.exports = function(urls, hashtags, user) {
             var post = new Post({
                 url: url,
                 user: user,
-                next_reminder: unitToMilliseconds(dateString[0], parseInt(dateString.slice(1, dateString.length).split("").reverse().join("")))
+                next_reminder: new Date(unitToMilliseconds(dateString[0]) * parseInt(dateString.slice(1, dateString.length).split("").reverse().join("")))
             });
         }
     }

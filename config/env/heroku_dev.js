@@ -1,16 +1,9 @@
 'use strict';
 
 module.exports = {
-    db: process.env.MONGOHQ_URL,
+    db: "mongodb://heroku:c8f98115338676cc25c8613d03bb0919@paulo.mongohq.com:10078/app20751307",
     app: {
         name: "ReadAgain"
-    },
-    mail: {
-        service: "SendGrid",
-        auth: {
-            user: process.env.SENDGRID_USERNAME,
-            pass: process.env.SENDGRID_PASSWORD
-        }
     },
     facebook: {
         clientID: "APP_ID",

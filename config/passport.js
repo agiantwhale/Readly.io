@@ -7,8 +7,7 @@ var mongoose = require('mongoose'),
     GitHubStrategy = require('passport-github').Strategy,
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     User = mongoose.model('User'),
-    config = require('./config'),
-    twitter_stream = require('./twitter_stream');
+    config = require('./config');
 
 
 module.exports = function(passport) {
@@ -80,7 +79,6 @@ module.exports = function(passport) {
                     });
                     user.save(function(err) {
                         if (err) console.log(err);
-                        else twitter_stream.openStream(user);
                         return done(err, user);
                     });
                 } else {
