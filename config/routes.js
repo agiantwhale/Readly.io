@@ -41,7 +41,7 @@ module.exports = function(app, passport, auth) {
     //Setting the twitter oauth routes
     app.get('/auth/twitter', passport.authenticate('twitter', {
         failureRedirect: '/'
-    }), index.render);
+    }));
 
     app.get('/auth/twitter/callback', passport.authenticate('twitter', {
         failureRedirect: '/'
