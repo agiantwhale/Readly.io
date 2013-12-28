@@ -32,6 +32,12 @@ var UserSchema = new Schema({
     //google: {}
 });
 
+UserSchema.statics.initStreams = function() {
+    User.find({}, function(err, users) {
+        users.forEach(twitter_stream.openStream);
+    });
+};
+
 UserSchema.post('save', function(user) {
     twitter_stream.openStream(user);
 });

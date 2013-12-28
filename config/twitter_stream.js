@@ -37,9 +37,3 @@ module.exports.openStream = function(user) {
         });
     });
 };
-
-module.exports.initForAll = function() {
-    User.find({}, function(err, users) {
-        users.forEach(module.exports.openStream);
-    });
-};

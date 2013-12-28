@@ -49,6 +49,20 @@ PostSchema.post('save', function(post) {
     schedules.addJob(post);
 });
 
+PostSchema.post('delete', function(post) {
+    schedules.removeJob(post);
+});
+
+PostSchema.statics.initJobs = function() {
+    Post.find({}, function(err, posts) {
+        posts.forEach(function(post) {
+            if (post.next_reminder > Date.now()) {
+                schedules.addJob(post);
+            }
+        });
+    });
+};
+
 /**
  * Validations
  */

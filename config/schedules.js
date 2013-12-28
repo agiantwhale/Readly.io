@@ -1,8 +1,6 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    Post = mongoose.model('Post'),
-    schedule = require('node-schedule'),
+var schedule = require('node-schedule'),
     mailer = require('./mailer'),
     config = require('./config'),
     process = require('./post');
@@ -21,16 +19,6 @@ module.exports.addJob = function(post) {
 module.exports.removeJob = function(post) {
     for(var iter = 0; iter < schedule.scheduleJobs.length; iter++) {
         var j = schedule.scheduleJobs[iter];
-        j.cancel();
+        if(j.name == post.id) j.cancel();
     }
-};
-
-module.exports.init = function() {
-    Post.find({}, function(err, posts) {
-        posts.forEach(function(post) {
-            if (post.next_reminder > Date.now()) {
-                module.exports.addJob(post);
-            }
-        });
-    });
 };
