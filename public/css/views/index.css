@@ -1,6 +1,14 @@
 .intro {
-    margin-top: 100px;
-    min-height: 300px;
+    padding-top: 100px;
+    min-height: 350px;
+    background-image: url('/img/background/intro.png');
+    background-size: cover;
+}
+
+.intro_box {
+    padding: 40px;
+    border-radius: 5px;
+    background-color: rgba(200,200,200,0.6);
 }
 
 .intro>p {
@@ -17,10 +25,28 @@
     text-align: center;
 }
 
-.infocon {
+.info .fa {
     font-size: 3em;
+}
+
+.infotext {
+    padding: 0.5em;
 }
 
 .faq {
     margin-top: 50px;
 }
+
+.faq p {
+    color: gray
+}
+
+.faq a:link {color:#6E6E6E;}      /* unvisited link */
+.faq a:visited {color:#6E6E6E;}  /* visited link */
+.faq a:hover {color:#262626;}  /* mouse over link */
+.faq a:active {color:#262626;}  /* selected link */ 
+
+.faq a:link {text-decoration:underline;}
+.faq a:visited {text-decoration:underline;}
+.faq a:hover {text-decoration:underline;}
+.faq a:active {text-decoration:underline;}

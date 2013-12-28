@@ -35,3 +35,13 @@ footer p {
     color: gray;
     font-size: 0.7em;
 }
+
+footer a:link {color:#6E6E6E;}      /* unvisited link */
+footer a:visited {color:#6E6E6E;}  /* visited link */
+footer a:hover {color:#262626;}  /* mouse over link */
+footer a:active {color:#262626;}  /* selected link */ 
+
+footer a:link {text-decoration:underline;}
+footer a:visited {text-decoration:underline;}
+footer a:hover {text-decoration:underline;}
+footer a:active {text-decoration:underline;}
