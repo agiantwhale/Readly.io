@@ -17,12 +17,14 @@ function unitToMilliseconds(unitString, num) {
     case "w":
         unitString="weeks";
         break;
+    case "d":
+        unitString="days";
+        break;
     case "h":
         unitString="hours";
         break;
     default:
-        unitString="days";
-        break;
+        return returnDate.toDate();
     }
 
     return returnDate.add(unitString, num).toDate();
@@ -58,17 +60,11 @@ module.exports = function(urls, hashtags, user) {
     if (valid) {
         for (var iter = 0; iter < urls.length; iter++) {
             var url = urls[iter];
-
-            /*
             var post = new Post({
                 url: url,
                 user: user,
                 next_reminder: unitToMilliseconds(dateString[0], parseInt(dateString.slice(1, dateString.length).split("").reverse().join("")))
             });
-
-            post.save(function(err){
-                if(err) console.log(err);
-            }); */
         }
     }
 };

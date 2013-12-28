@@ -5,8 +5,8 @@
  */
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    authTypes = ['github', 'twitter', 'facebook', 'google'],
-    twitter_stream = require('../../config/twitter_stream');
+    crypto = require('crypto'),
+    authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 
 /**
@@ -29,16 +29,6 @@ var UserSchema = new Schema({
     },
     //github: {},
     //google: {}
-});
-
-UserSchema.statics.initStreams = function() {
-    this.find({}, function(err, users) {
-        users.forEach(twitter_stream.openStream);
-    });
-};
-
-UserSchema.post('save', function(user) {
-    twitter_stream.openStream(user);
 });
 
 UserSchema.path('email').validate(function(email) {
