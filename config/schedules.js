@@ -19,7 +19,7 @@ module.exports.addJob = function(post) {
 };
 
 module.exports.removeJob = function(post) {
-    for(int iter = 0; iter < schedule.scheduleJobs.length; iter++) {
+    for(var iter = 0; iter < schedule.scheduleJobs.length; iter++) {
         var j = schedule.scheduleJobs[iter];
         j.cancel();
     }
