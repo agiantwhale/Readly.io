@@ -85,7 +85,6 @@ module.exports = function(passport) {
                 if (err) console.log(err);
                 return done(err, user);
             });
-            return done(err, user);
         });
     }));
 
