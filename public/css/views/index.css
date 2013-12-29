@@ -1,14 +1,9 @@
 .intro {
-    padding-top: 100px;
-    min-height: 350px;
+    padding-top: 250px;
+    padding-bottom: 200px;
     background-image: url('/img/background/intro.png');
     background-size: cover;
-}
-
-.intro_box {
-    padding: 40px;
-    border-radius: 5px;
-    background-color: rgba(200,200,200,0.6);
+    color: white;
 }
 
 .intro>p {
@@ -16,8 +11,9 @@
 }
 
 .info {
-    background-color: #CBEDFF;
-    min-height: 300px;
+    background-color: #1abc9c;
+    padding-top: 70px;
+    padding-bottom: 50px;
 }
 
 .info>div {

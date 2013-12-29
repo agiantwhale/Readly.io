@@ -1,0 +1,16 @@
+extends ../layouts/default
+
+block content
+    .intro
+        .container
+    .container
+        h6 Welcome!
+        p Verify your email account to get started.
+        form(role="form")
+            .row
+                .col-md-9
+                    .form-group
+                        label(for="email").sr-only Email address
+                        input(type="email", id="email").form-control
+                .col-md-3
+                    button(type="submit").btn.btn-primary Verify

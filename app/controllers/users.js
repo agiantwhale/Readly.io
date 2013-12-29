@@ -15,11 +15,11 @@ exports.authCallback = function(req, res) {
 };
 
 /**
- * Show login form
+ * Show email form
  */
-exports.signin = function(req, res) {
-    res.render('users/signin', {
-        title: 'Signin',
+exports.verify = function(req, res) {
+    res.render('email/verify', {
+        title: 'Verify',
         message: req.flash('error')
     });
 };
