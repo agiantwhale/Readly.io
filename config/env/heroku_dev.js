@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+    url:"http://readagain-dev.herokuapp.com",
     db: process.env.MONGOHQ_URL,
     app: {
         name: "ReadAgain"
@@ -20,7 +21,7 @@ module.exports = {
     twitter: {
         clientID: "5pPUdA7wN4fOjgpQyntw",
         clientSecret: "rPrvoNVDj8CbwhTHqfZ94BnoFkwzRraxGyPWPxasE0",
-        callbackURL: "http://readagain.herokuapp.com//auth/twitter/callback"
+        callbackURL: "http://readagain-dev.herokuapp.com/auth/twitter/callback"
     },
     github: {
         clientID: "APP_ID",

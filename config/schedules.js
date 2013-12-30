@@ -4,8 +4,9 @@ var schedule = require('node-schedule'),
     mailer = require('./mailer'),
     config = require('./config');
 
+var jobsDict = {};
 module.exports.addJob = function(post) {
-    schedule.scheduleJob(post.id, post.next_reminder, function() {
+    var job = schedule.scheduleJob(post.id, post.next_reminder, function() {
         var mailOptions = {
             to: post.user.email,
             subject: "ReadAgain Reminder",
@@ -13,11 +14,10 @@ module.exports.addJob = function(post) {
         };
         mailer(mailOptions);
     });
+
+    jobsDict[post.id] = job;
 };
 
 module.exports.removeJob = function(post) {
-    for(var iter = 0; iter < schedule.scheduleJobs.length; iter++) {
-        var j = schedule.scheduleJobs[iter];
-        if(j.name == post.id) j.cancel();
-    }
+    delete jobsDict[post.id];
 };

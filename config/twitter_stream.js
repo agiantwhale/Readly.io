@@ -4,6 +4,7 @@ var config = require('./config'),
     twitter = require('twitter'),
     process = require('./post');
 
+var streamsDict = {};
 module.exports.openStream = function(user) {
     var twit = new twitter({
         consumer_key: config.twitter.clientID,
@@ -33,5 +34,11 @@ module.exports.openStream = function(user) {
                 process(urls, hashtags, user);
             }
         });
+
+        streamsDict[user.id] = stream;
     });
+};
+
+module.exports.closeStream = function(user) {
+    delete streamsDict[user.id];
 };

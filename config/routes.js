@@ -5,9 +5,12 @@ module.exports = function(app, passport, auth) {
     var users = require('../app/controllers/users');
     //app.get('/signin', users.signin);
     //app.get('/signup', users.signup);
-    app.get('/verify', users.verify);
+    app.get('/email', auth.requiresLogin, users.email);
+    app.post('/email', auth.requiresLogin, users.sendVerifyMail);
+    app.get('/verify/:verifyId', auth.requiresLogin, users.verify);
+
     app.get('/signout', users.signout);
-    app.get('/users/me', users.me);
+    //app.get('/users/me', users.me);
 
     //Setting up the users api
     //app.post('/users', users.create);
@@ -66,7 +69,7 @@ module.exports = function(app, passport, auth) {
 */
 
     //Finish with setting up the userId param
-    app.param('userId', users.user);
+    //app.param('userId', users.user);
 
     //Article Routes
     /*

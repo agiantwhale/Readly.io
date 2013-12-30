@@ -6,15 +6,19 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     authTypes = ['github', 'twitter', 'facebook', 'google'],
-    twitter_stream = require('../../config/twitter_stream');
+    check = require('validator').check,
+    sanitize = require('validator').sanitize;
 
 
 /**
  * User Schema
  */
 var UserSchema = new Schema({
+    verified: {
+        type: Boolean,
+        default: false
+    },
     email: String,
-    provider: String,
     //facebook: {},
     twitter: {
         token: {
@@ -37,14 +41,8 @@ UserSchema.statics.initStreams = function() {
     });
 };
 
-UserSchema.post('save', function(user) {
-    twitter_stream.openStream(user);
-});
-
 UserSchema.path('email').validate(function(email) {
-    // if you are authenticating by any of the oauth strategies, don't validate
-    if (authTypes.indexOf(this.provider) !== -1) return true;
-    return email.length;
+    return check(email).isEmail();
 }, 'Email cannot be blank');
 
 mongoose.model('User', UserSchema);

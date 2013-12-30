@@ -4,7 +4,13 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    User = mongoose.model('User');
+    User = mongoose.model('User'),
+    twitter_stream = require('../../config/twitter_stream'),
+    mailer = require('../../config/mailer'),
+    config = require('../../config/config'),
+    jwt = require('jwt-simple'),
+    check = require('validator').check,
+    sanitize = require('validator').sanitize;
 
 /**
  * Auth callback
@@ -17,11 +23,76 @@ exports.authCallback = function(req, res) {
 /**
  * Show email form
  */
-exports.verify = function(req, res) {
+exports.email = function(req, res) {
     res.render('email/verify', {
         title: 'Verify',
         message: req.flash('error')
     });
+};
+
+exports.sendVerifyMail = function(req, res) {
+    var user = req.user;
+    var email = sanitize(req.body.email).trim();
+    var emailValid = check(email).isEmail();
+
+    if(!emailValid) {
+        return res.send(400, 'Invalid email');
+    }
+
+    if(user.verified && email == user.email) {
+        //user is already verified with that address
+        //no need to anything else
+        res.jsonp({
+            status: 'verified'
+        });
+    } else {
+        user.verified = false;
+        user.email = email;
+
+        var payload = {
+            user: user,
+            email: email
+        };
+        var encoded = jwt.encode(payload, config.passkey);
+
+        var mailOptions = {
+            to: email,
+            subject: "Verify your email!", // Subject line
+            text: config.url + '/verify/' + encoded, // plaintext body
+        };
+        mailer(mailOptions);
+
+        user.save(function(err) {
+            if(err) {
+                console.log(err);
+                res.send(500, 'Internal server error');
+            } else {
+                twitter_stream.closeStream(user);
+                res.jsonp({status: 'success'});
+            }
+        });
+    }
+};
+
+exports.verify = function(req, res) {
+    var user = req.user;
+    var payload = req.params.verifyId;
+    var decoded = jwt.decode(payload, config.passkey);
+    
+    if(decoded.user == user && decoded.email == user.email) {
+        user.verified = true;
+        user.save(function(err) {
+            if(err) {
+                console.log(err);
+                res.send(500, 'Internal server error');
+            } else {
+                twitter_stream.openStream(user);
+                res.jsonp({status: 'success'});
+            }
+        }); 
+    } else {
+        res.send(401, 'User is not authorized');
+    }
 };
 
 /**

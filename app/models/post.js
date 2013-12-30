@@ -5,7 +5,9 @@
  */
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    schedules = require('../../config/schedules');
+    schedules = require('../../config/schedules'),
+    check = require('validator').check,
+    sanitize = require('validator').sanitize;
 
 
 /**
@@ -38,13 +40,6 @@ var PostSchema = new Schema({
     }
 });
 
-
-// function to validate URL, might want to add actual link checking (crawl link) later
-function validateURL(textval) {
-    var urlregex = new RegExp("^(http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*$");
-    return urlregex.test(textval);
-}
-
 PostSchema.post('save', function(post) {
     mongoose.model('Post').findOne(post).populate('user').exec(function(err, post){
         if(err) console.log(err);
@@ -70,7 +65,7 @@ PostSchema.statics.initJobs = function() {
  * Validations
  */
 PostSchema.path('url').validate(function(url) {
-    return validateURL(url);
+    return check(url).isUrl();
 }, 'URL is not valid');
 
 mongoose.model('Post', PostSchema);

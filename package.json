@@ -41,7 +41,9 @@
     "forever": "~0.10.11",
     "nodemailer": "~0.5.15",
     "node-schedule": "~0.1.13",
-    "moment": "~2.5.0"
+    "moment": "~2.5.0",
+    "jwt-simple": "~0.1.0",
+    "validator": "~2.0.0"
   },
   "devDependencies": {
     "supertest": "latest",
