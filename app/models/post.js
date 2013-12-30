@@ -6,8 +6,7 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     schedules = require('../../config/schedules'),
-    check = require('validator').check,
-    sanitize = require('validator').sanitize;
+    check = require('validator').check;
 
 
 /**
@@ -16,23 +15,19 @@ var mongoose = require('mongoose'),
 var PostSchema = new Schema({
     created: {
         type: Date,
-    default:
-        Date.now
+        default: Date.now
     },
     url: {
         type: String,
-    default:
-        ''
+        default: ''
     },
     next_reminder: {
         type: Date,
-    default:
-        Date.now
+        default: Date.now
     },
     prev_reminders: [{
         type: Date,
-    default:
-        Date.now
+        default: Date.now
     }],
     user: {
         type: Schema.ObjectId,

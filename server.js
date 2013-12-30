@@ -69,7 +69,7 @@ logger.init(app, passport, mongoose);
 
 //Logger
 process.on('uncaughtException', function (err) {
-  console.log('Caught exception: ' + err);
+    console.log('Caught exception: ' + err);
 });
 
 //expose app

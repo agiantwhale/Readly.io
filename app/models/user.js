@@ -5,9 +5,8 @@
  */
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    authTypes = ['github', 'twitter', 'facebook', 'google'],
     check = require('validator').check,
-    sanitize = require('validator').sanitize;
+    twitter_stream = require('../../config/twitter_stream');
 
 
 /**
@@ -23,11 +22,11 @@ var UserSchema = new Schema({
     twitter: {
         token: {
             type: String,
-            default: ""
+            default: ''
         },
         tokenSecret: {
             type: String,
-            default: ""
+            default: ''
         },
         profile: {}
     },
