@@ -1,11 +1,18 @@
-'use strict';
-
-var config = require('./config'),
+var kue = require('kue'),
     twitter = require('twitter'),
-    process = require('./process');
+    config = require('./config'),
+    process = require('./process'),
+    jobs = kue.createQueue();
 
-var streamsDict = {};
-module.exports.openStream = function(user) {
+jobs.process('twitterStream', function(job, done) {
+    var user = job.data;
+    /*
+     *  User
+     *      -token
+     *      -tokenSecret
+     *      -profile
+     */
+
     var twit = new twitter({
         consumer_key: config.twitter.clientID,
         consumer_secret: config.twitter.clientSecret,
@@ -37,9 +44,4 @@ module.exports.openStream = function(user) {
 
         streamsDict[user.id] = stream;
     });
-};
-
-module.exports.closeStream = function(user) {
-    streamsDict[user.id].destroy();
-    delete streamsDict[user.id];
-};
+});
