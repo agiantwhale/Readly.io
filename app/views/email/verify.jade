@@ -4,6 +4,10 @@ block content
     .intro
         .container
     .container
+        if message && message.length
+            br
+            .alert.alert-danger
+                strong #{message}
         h6 Welcome!
         p Verify your email account to get started.
         form(role="form", action="/email", method="post")
