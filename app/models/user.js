@@ -4,9 +4,10 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
+    kue = require('kue'),
     check = require('validator').check,
-    twitter_stream = require('../../config/twitter_stream');
+    Schema = mongoose.Schema,
+    jobs = kue.createQueue();
 
 
 /**
@@ -28,15 +29,42 @@ var UserSchema = new Schema({
             type: String,
             default: ''
         },
-        profile: {}
+        profile: {},
+        streamId: Number
     },
     //github: {},
     //google: {}
 });
 
+UserSchema.methods = {
+    openStream: function() {
+        var user = this;
+
+        // user isn't verified
+        if(!user.verified) return;
+
+        var job = jobs.create('twitterStream', user).save();
+        user.twitter.streamId = job.id;
+        user.save(function(err) {
+            if (err) console.log(err);
+        });
+    },
+
+    closeStream: function() {
+        var user = this;
+        jobs.get(user.twitter.streamId, function(err, job) {
+            if (err) return;
+            job.remove();
+        });
+    }
+};
+
 UserSchema.statics.initStreams = function() {
     this.find({}, function(err, users) {
-        users.forEach(twitter_stream.openStream);
+        // users.forEach(twitter_stream.openStream);
+        users.forEach(function(user) {
+            user.openStream();
+        });
     });
 };
 

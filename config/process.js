@@ -32,7 +32,7 @@ function unitToDate(unitString, num) {
 }
 
 module.exports = function(urls, hashtags, user) {
-    if (urls.length == 0) {
+    if (urls.length === 0) {
         return;
     }
 

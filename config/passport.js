@@ -24,7 +24,8 @@ module.exports = function(passport) {
         });
     });
 
-    //Use local strategy
+    // Use local strategy
+    // local strategy has been outdated in favor for twitter oauth stream.
 /*
     passport.use(new LocalStrategy({
             usernameField: 'email',

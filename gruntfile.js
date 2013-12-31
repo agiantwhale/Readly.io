@@ -40,7 +40,7 @@ module.exports = function(grunt) {
             }
         },
         nodemon: {
-            dev: {
+            server: {
                 options: {
                     file: 'server.js',
                     args: [],
@@ -53,10 +53,22 @@ module.exports = function(grunt) {
                     },
                     cwd: __dirname
                 }
+            },
+
+            worker: {
+                options: {
+                    file: 'worker.js',
+                    args: [],
+                    ignoredFiles: ['public/**'],
+                    watchedExtensions: ['js'],
+                    debug: true,
+                    delayTime: 1,
+                    cwd: __dirname
+                }
             }
         },
         concurrent: {
-            tasks: ['nodemon', 'watch'],
+            tasks: ['nodemon:server', 'nodemon:worker', 'watch'],
             options: {
                 logConcurrentOutput: true
             }

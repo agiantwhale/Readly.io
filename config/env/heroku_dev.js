@@ -6,6 +6,7 @@ module.exports = {
     app: {
         name: "ReadAgain"
     },
+    redis: process.env.REDISTOGO_URL,
     mail: {
         service: "SendGrid",
         auth: {

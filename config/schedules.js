@@ -1,3 +1,5 @@
+// phased out, code moved to worker.js
+
 'use strict';
 
 var schedule = require('node-schedule'),
