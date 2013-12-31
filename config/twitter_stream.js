@@ -11,8 +11,10 @@ module.exports.openStream = function(user) {
     var twit = new twitter({
         consumer_key: config.twitter.clientID,
         consumer_secret: config.twitter.clientSecret,
+        /*
         access_token_key: user.twitter.token,
         access_token_secret: user.twitter.tokenSecret
+        */
     });
 
     twit.stream('statuses/filter', {

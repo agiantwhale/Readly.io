@@ -11,6 +11,8 @@ block content
                 .col-md-9
                     .form-group
                         label(for="email").sr-only Email address
-                        input(type="email", id="email").form-control
+                        input(type="email", name="email", id="email").form-control
                 .col-md-3
                     button(type="submit").btn.btn-primary Verify
+    script(type="text/javascript").
+        window.user = !{user};

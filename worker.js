@@ -1,16 +1,37 @@
 // worker process, handles twitter stream
 'use strict';
 
-var url = require('url'),
+var fs = require('fs'),
+    url = require('url'),
     kue = require('kue'),
     redis = require('redis'),
     twitter = require('twitter'),
-    mongoose = require('mongoose'),
-    config = require('./config/config'),
-    process = require('./config/process'),
-    mailer = require('./config/mailer');
+    mongoose = require('mongoose');
+
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 console.log('Initializing worker...');
+
+// register the schemas
+var models_path = __dirname + '/app/models';
+var walk = function(path) {
+    fs.readdirSync(path).forEach(function(file) {
+        var newPath = path + '/' + file;
+        var stat = fs.statSync(newPath);
+        if (stat.isFile()) {
+            if (/(.*)\.(js$|coffee$)/.test(file)) {
+                require(newPath);
+            }
+        } else if (stat.isDirectory()) {
+            walk(newPath);
+        }
+    });
+};
+walk(models_path);
+
+var config = require('./config/config'),
+    processPost = require('./config/process'),
+    mailer = require('./config/mailer');
 
 // connect with the DB
 mongoose.connect(config.db);
@@ -39,8 +60,10 @@ jobs.process('twitterStream', function(job, done) {
     var twit = new twitter({
         consumer_key: config.twitter.clientID,
         consumer_secret: config.twitter.clientSecret,
+        /*
         access_token_key: user.twitter.token,
         access_token_secret: user.twitter.tokenSecret
+        */
     });
 
     twit.stream('statuses/filter', {
@@ -61,7 +84,7 @@ jobs.process('twitterStream', function(job, done) {
 
                 console.log(hashtags);
 
-                process(urls, hashtags, user);
+                processPost(urls, hashtags, user);
             }
         });
 

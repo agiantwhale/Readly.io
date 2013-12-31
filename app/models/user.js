@@ -18,9 +18,14 @@ var UserSchema = new Schema({
         type: Boolean,
         default: false
     },
+    verificationCode: {
+        type: String,
+        unique: true
+    },
     email: String,
     //facebook: {},
     twitter: {
+        /*
         token: {
             type: String,
             default: ''
@@ -29,6 +34,7 @@ var UserSchema = new Schema({
             type: String,
             default: ''
         },
+        */
         profile: {},
         streamId: Number
     },
@@ -52,7 +58,7 @@ UserSchema.methods = {
 
     closeStream: function() {
         var user = this;
-        jobs.get(user.twitter.streamId, function(err, job) {
+        kue.Job.get(user.twitter.streamId, function(err, job) {
             if (err) return;
             job.remove();
         });

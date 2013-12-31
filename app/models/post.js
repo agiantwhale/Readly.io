@@ -75,12 +75,14 @@ PostSchema.methods = {
     }
 };
 
+// save scheduling/canceling in save post callback will cause an infinite loop
+/*
 PostSchema.post('save', function(post) {
     mongoose.model('Post').findOne(post).populate('user').exec(function(err, post){
         if(err) console.log(err);
-        post.schedulePost();
     });
 });
+*/
 
 PostSchema.post('delete', function(post) {
     post.cancelPost();
