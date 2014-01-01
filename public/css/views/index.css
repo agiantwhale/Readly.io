@@ -32,7 +32,6 @@
 .info {
     padding-top: 70px;
     padding-bottom: 50px;
-    background-color: #29CCC2;
 }
 
 .info>div {
@@ -51,4 +50,5 @@
 .faq {
     padding-top: 50px;
     padding-bottom: 50px;
+    background-color: #DCDCDC;
 }
