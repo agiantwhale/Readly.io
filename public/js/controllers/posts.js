@@ -7,7 +7,7 @@ angular.module('raPosts').controller('PostsController', ['$scope', '$routeParams
         post.$remove();
 
         for (var i in $scope.posts) {
-            if ($scope.posts._id === post._id) {
+            if ($scope.posts[i]._id === post._id) {
                 $scope.posts.splice(i, 1);
             }
         }

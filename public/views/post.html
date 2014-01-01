@@ -5,13 +5,13 @@
         <div class="row" data-ng-repeat="post in posts" data-ng-if="!!post.next_reminder">
             <div class="col-md-3">{{post.next_reminder}}</div>
             <div class="col-md-8">{{post.url}}</div>
-            <div class="col-md-1"><a data-ng-click="post.$remove()">Delete</a></div>
+            <div class="col-md-1"><a data-ng-click="remove(post)">Delete</a></div>
         </div>
         <div class="h6">Previous links</div>
         <div class="row" data-ng-repeat="post in posts" data-ng-if="!post.next_reminder">
             <div class="col-md-3">{{post.prev_reminders[post.prev_reminders.length-1]}}</div>
             <div class="col-md-8">{{post.url}}</div>
-            <div class="col-md-1"><a data-ng-click="post.$remove()">Delete</a></div>
+            <div class="col-md-1"><a data-ng-click="remove(post)">Delete</a></div>
         </div>
     </div>
 </section>
