@@ -6,6 +6,14 @@ body {
     height: 100%;
 }
 
+p, button, a {
+    font-family: 'PT Sans', Helvetica, Arial, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Arvo', Georgia, Times, serif !important;
+}
+
 .wrap {
     min-height: 100%;
     height: auto;

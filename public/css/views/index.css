@@ -1,10 +1,14 @@
 .intro {
-    padding-top: 200px;
-    /* padding-bottom: 150px; */
-    min-height: 600px; /* More consistent accross different resolutions than setting the bottom padding. */
-    background-image: url('/img/background/intro.png');
+    padding-top: 180px;
+    min-height: 500px;
+    /*
+    background-color: #70FFE3;
+    */
     background-size: cover;
-    color: white;
+}
+
+.intro a {
+    font-family: 'Arvo', Georgia, Times, serif !important;
 }
 
 .intro>.container {
