@@ -32,6 +32,8 @@ function unitToDate(unitString, num) {
 }
 
 module.exports = function(urls, hashtags, user) {
+
+    console.log(user);
     // check if user is verified
     if (!user.verified) return;
 
