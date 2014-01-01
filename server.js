@@ -23,6 +23,16 @@ var config = require('./config/config'),
     auth = require('./config/middlewares/authorization'),
     mongoose = require('mongoose');
 
+// kue settings
+if (config.redis) {
+    kue.redis.createClient = function() {
+        var rtg = url.parse(config.redis);
+        var redis = redis.createClient(rtg.port, rtg.hostname);
+        redis.auth(rtg.auth.split(":")[1]);
+        return redis;
+    };
+}
+
 //Bootstrap db connection
 var db = mongoose.connect(config.db);
 
@@ -42,16 +52,6 @@ var walk = function(path) {
     });
 };
 walk(models_path);
-
-// kue settings
-if (config.redis) {
-    kue.redis.createClient = function() {
-        var rtg = url.parse(config.redis);
-        var redis = redis.createClient(rtg.port, rtg.hostname);
-        redis.auth(rtg.auth.split(":")[1]);
-        return redis;
-    };
-}
 
 //bootstrap passport config
 require('./config/passport')(passport);
