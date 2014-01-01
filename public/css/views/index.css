@@ -6,10 +6,6 @@
     color: white;
 }
 
-.intro>p {
-    color: gray;
-}
-
 .info {
     background-color: #1abc9c;
     padding-top: 70px;
@@ -22,7 +18,7 @@
 }
 
 .info .fa {
-    font-size: 3em;
+    font-size: 5em;
 }
 
 .infotext {
@@ -32,17 +28,3 @@
 .faq {
     margin-top: 50px;
 }
-
-.faq p {
-    color: gray
-}
-
-.faq a:link {color:#6E6E6E;}      /* unvisited link */
-.faq a:visited {color:#6E6E6E;}  /* visited link */
-.faq a:hover {color:#262626;}  /* mouse over link */
-.faq a:active {color:#262626;}  /* selected link */ 
-
-.faq a:link {text-decoration:underline;}
-.faq a:visited {text-decoration:underline;}
-.faq a:hover {text-decoration:underline;}
-.faq a:active {text-decoration:underline;}

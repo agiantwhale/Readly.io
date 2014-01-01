@@ -16,27 +16,31 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
     verified: {
         type: Boolean,
-        default: false
+        default:false
     },
     verificationCode: {
         type: String,
-        unique: true
+        unique: true,
+        select: false
     },
     email: String,
     //facebook: {},
     twitter: {
-        /*
         token: {
             type: String,
-            default: ''
+            default: '',
+            select: false
         },
         tokenSecret: {
             type: String,
-            default: ''
+            default: '',
+            select: false
         },
-        */
         profile: {},
-        streamId: Number
+        streamId: {
+            type: Number,
+            select: false
+        }
     },
     //github: {},
     //google: {}
@@ -44,15 +48,18 @@ var UserSchema = new Schema({
 
 UserSchema.methods = {
     openStream: function() {
-        var user = this;
+        var model = this.model(this.constructor.modelName);
+        model.findById(this._id)
+        .select('email verified twitter.profile twitter.token twitter.tokenSecret')
+        .exec(function(err, user) {
+            // user isn't verified
+            if (!user.verified) return;
 
-        // user isn't verified
-        if(!user.verified) return;
-
-        var job = jobs.create('twitterStream', user).save();
-        user.twitter.streamId = job.id;
-        user.save(function(err) {
-            if (err) console.log(err);
+            var job = jobs.create('twitterStream', user).save();
+            user.twitter.streamId = job.id;
+            user.save(function(err) {
+                if (err) console.log(err);
+            });
         });
     },
 

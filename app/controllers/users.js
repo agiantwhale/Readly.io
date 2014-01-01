@@ -8,7 +8,6 @@ var mongoose = require('mongoose'),
     hat = require('hat'),
     mailer = require('../../config/mailer'),
     config = require('../../config/config'),
-    jwt = require('jwt-simple'),
     check = require('validator').check,
     sanitize = require('validator').sanitize;
 
@@ -24,8 +23,9 @@ exports.authCallback = function(req, res) {
  * Show email form
  */
 exports.email = function(req, res) {
+    var user = req.user;
     res.render('email/verify', {
-        user: req.user ? JSON.stringify(req.user) : 'null'
+        user: user ? JSON.stringify(user) : 'null'
     });
 };
 
@@ -38,7 +38,7 @@ exports.sendVerifyMail = function(req, res) {
 
     if (!emailValid) {
         return res.render('email/verify', {
-            user: req.user ? JSON.stringify(req.user) : 'null',
+            user: user ? JSON.stringify(user) : 'null',
             message: 'Invalid email.'
         });
     }
@@ -47,7 +47,7 @@ exports.sendVerifyMail = function(req, res) {
         //user is already verified with that address
         //no need to anything else
         return res.render('email/verify', {
-            user: req.user ? JSON.stringify(req.user) : 'null',
+            user: user ? JSON.stringify(user) : 'null',
             message: 'Already verified with that email address.'
         });
     } else {
@@ -71,14 +71,14 @@ exports.sendVerifyMail = function(req, res) {
             } else {
                 user.closeStream();
                 return res.render('email/sent', {
-                    user: req.user ? JSON.stringify(req.user) : 'null'
+                    user: user ? JSON.stringify(user) : 'null'
                 });
             }
         });
     }
 };
 
-exports.verify = function(req, res, next) {
+exports.verify = function(req, res) {
     var verificationCode = req.params.verifyId;
 
     User.findOne({

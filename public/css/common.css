@@ -1,3 +1,28 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+    height: 100%;
+}
+
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -50px;
+    padding: 0 0 50px;
+}
+
+.footer {
+    height: 70px; /* Let it bleed */
+    background-color: #f5f5f5;
+    text-align: center;
+    font-size: 12px !important;
+}
+
+/* End fo Sticky footer styles
+-------------------------------------------------- */
+
 .navbar-wrapper {
     margin-top: 20px;
     position: absolute;
@@ -16,39 +41,4 @@
 .navbar-wrapper .navbar {
     padding-left: 15px;
     padding-right: 15px;
-}
-
-footer p {
-    text-align: center;
-    color: gray;
-    font-size: 0.7em;
-}
-
-footer a:link {
-    color: #6E6E6E;
-}      /* unvisited link */
-footer a:visited {
-    color: #6E6E6E;
-}  /* visited link */
-footer a:hover {
-    color: #262626;
-}  /* mouse over link */
-footer a:active {
-    color: #262626;
-}  /* selected link */ 
-
-footer a:link {
-    text-decoration: underline;
-}
-
-footer a:visited {
-    text-decoration: underline;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
-
-footer a:active {
-    text-decoration: underline;
 }

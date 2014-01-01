@@ -72,18 +72,14 @@ module.exports = function(passport) {
                     username: profile.username,
                     provider: 'twitter',
                     twitter: {
-                        /*
                         token: token,
                         tokenSecret: tokenSecret,
-                        */
                         profile: profile._json
                     }
                 });
             } else {
-                /*
                 user.twitter.token = token;
                 user.twitter.tokenSecret = tokenSecret;
-                */
             }
 
             user.save(function(err) {

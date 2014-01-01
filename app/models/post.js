@@ -39,31 +39,34 @@ var PostSchema = new Schema({
 });
 
 PostSchema.methods = {
-    schedulePost: function() {
-        var post = this;
+    //delay is a moment function
+    schedulePost: function(delay) {
+        var model = this.model(this.constructor.modelName);
+        model.findById(this._id)
+        .select('user url')
+        .populate('user')
+        .exec(function(err, post) {
+            if (!delay) delay = moment(post.next_reminder).subtract(moment());
 
-        // time to be delayed
-        if(post.next_reminder > Date.now()) return;
+            var job = jobs.create('emailPost', post);
 
-        var delay = moment(post.next_reminder).subtract(Date.now()).valueOf();
+            // add the completion handler
+            job.on('complete', function() {
+                post.prev_reminders.push(post.next_reminder);
+                post.next_reminder = null;
+                post.jobId = null;
+                post.save();
+            });
 
-        var job = jobs.create('emailPost', post);
+            // delay the job
+            job.delay(delay.valueOf());
 
-        // add the completion handler
-        job.on('complete', function() {
-            post.prev_reminders.push(post.next_reminder);
-            post.next_reminder = null;
+            // save the job
+            job.save();
+
+            post.jobId = job.id;
             post.save();
         });
-
-        // delay the job
-        job.delay(delay);
-
-        // save the job
-        job.save();
-
-        post.jobId = job.id;
-        post.save();
     },
 
     cancelPost: function() {
@@ -91,10 +94,7 @@ PostSchema.post('delete', function(post) {
 PostSchema.statics.initJobs = function() {
     this.find().populate('user').exec(function(err, posts) {
         posts.forEach(function(post) {
-            if (post.next_reminder > Date.now()) {
-                //schedules.addJob(post);
-                post.schedulePost();
-            }
+            if(moment().isBefore(post.next_reminder)) post.schedulePost();
         });
     });
 };

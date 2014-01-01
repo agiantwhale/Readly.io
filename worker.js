@@ -12,7 +12,13 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 console.log('Initializing worker...');
 
-// register the schemas
+var config = require('./config/config'),
+    mailer = require('./config/mailer');
+
+// connect with the DB
+mongoose.connect(config.db);
+
+// Bootstrap models
 var models_path = __dirname + '/app/models';
 var walk = function(path) {
     fs.readdirSync(path).forEach(function(file) {
@@ -29,13 +35,6 @@ var walk = function(path) {
 };
 walk(models_path);
 
-var config = require('./config/config'),
-    processPost = require('./config/process'),
-    mailer = require('./config/mailer');
-
-// connect with the DB
-mongoose.connect(config.db);
-
 // kue settings
 if (config.redis) {
     kue.redis.createClient = function() {
@@ -46,9 +45,15 @@ if (config.redis) {
     };
 }
 
-var jobs = kue.createQueue();
+var jobs = kue.createQueue(),
+    processPost = require('./config/process');
 
-jobs.process('twitterStream', function(job, done) {
+jobs.promote();
+
+jobs.process('twitterStream', 100, function(job, done) {
+    console.log('Stream opened!');
+    // Don't close this job, we need to close it when user changes email address
+
     var user = job.data;
     /*
      *  User
@@ -56,14 +61,11 @@ jobs.process('twitterStream', function(job, done) {
      *      -tokenSecret
      *      -profile
      */
-
     var twit = new twitter({
         consumer_key: config.twitter.clientID,
         consumer_secret: config.twitter.clientSecret,
-        /*
         access_token_key: user.twitter.token,
         access_token_secret: user.twitter.tokenSecret
-        */
     });
 
     twit.stream('statuses/filter', {
@@ -82,18 +84,17 @@ jobs.process('twitterStream', function(job, done) {
                     hashtags.push(data.entities.hashtags[iter].text);
                 }
 
-                console.log(hashtags);
-
                 processPost(urls, hashtags, user);
             }
         });
-
-        streamsDict[user.id] = stream;
     });
+
+    done();
 });
 
-jobs.process('emailPost', function(job, done) {
+jobs.process('emailPost', 100, function(job, done) {
     var post = job.data;
+    console.log(post);
     var mailOptions = {
         to: post.user.email,
         subject: "ReadAgain Reminder",
@@ -102,3 +103,5 @@ jobs.process('emailPost', function(job, done) {
     mailer(mailOptions);
     done();
 });
+
+kue.app.listen(3001);

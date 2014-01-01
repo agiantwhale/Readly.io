@@ -1,39 +1,39 @@
 'use strict';
 // all the functions in here should be generic - no platform specific code in here!
 var mongoose = require('mongoose'),
+    User = mongoose.model('User'),
     Post = mongoose.model('Post'),
     moment = require('moment'),
     config = require('./config');
 
 function unitToDate(unitString, num) {
-    var returnDate = moment();
     switch (unitString) {
     case "y":
-        unitString="years";
+        unitString = "years";
         break;
     case "m":
-        unitString="months";
+        unitString = "months";
         break;
     case "w":
-        unitString="weeks";
+        unitString = "weeks";
         break;
     case "h":
-        unitString="hours";
+        unitString = "hours";
         break;
     case "s":
-        unitString="seconds";
+        unitString = "seconds";
         break;
     default:
-        unitString="days";
+        unitString = "days";
         break;
     }
 
-    return returnDate.add(unitString, num).toDate();
+    return moment.duration(num, unitString);
 }
 
 module.exports = function(urls, hashtags, user) {
     // check if user is verified
-    if(!user.verified) return;
+    if (!user.verified) return;
 
     if (urls.length === 0) {
         return;
@@ -64,15 +64,21 @@ module.exports = function(urls, hashtags, user) {
     if (valid) {
         for (var iter = 0; iter < urls.length; iter++) {
             var url = urls[iter];
+            var duration = unitToDate(dateString[0], parseInt(dateString.slice(1, dateString.length).split("").reverse().join("")));
 
-            var post = new Post({
-                url: url,
-                user: user,
-                next_reminder: unitToDate(dateString[0], parseInt(dateString.slice(1, dateString.length).split("").reverse().join("")))
-            });
+            User.findById(user._id, function(err, user) {
+                if(err) return;
+                console.log(user);
 
-            post.save(function(err){
-                if(err) console.log(err);
+                var post = new Post({
+                    url: url,
+                    user: user,
+                    next_reminder: moment().add(duration).toDate()
+                });
+                post.save(function(err) {
+                    if(err) console.log(err);
+                    post.schedulePost(duration);
+                })
             });
         }
     }
