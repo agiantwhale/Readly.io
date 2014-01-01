@@ -15,6 +15,16 @@ console.log('Initializing worker...');
 var config = require('./config/config'),
     mailer = require('./config/mailer');
 
+// kue settings
+if (config.redis) {
+    kue.redis.createClient = function() {
+        var rtg = url.parse(config.redis);
+        var redis = redis.createClient(rtg.port, rtg.hostname);
+        redis.auth(rtg.auth.split(":")[1]);
+        return redis;
+    };
+}
+
 // connect with the DB
 mongoose.connect(config.db);
 
@@ -34,16 +44,6 @@ var walk = function(path) {
     });
 };
 walk(models_path);
-
-// kue settings
-if (config.redis) {
-    kue.redis.createClient = function() {
-        var rtg = url.parse(config.redis);
-        var redis = redis.createClient(rtg.port, rtg.hostname);
-        redis.auth(rtg.auth.split(":")[1]);
-        return redis;
-    };
-}
 
 var jobs = kue.createQueue(),
     processPost = require('./config/process');
