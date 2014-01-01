@@ -6,6 +6,7 @@
 var express = require('express'),
     url = require('url'),
     kue = require('kue'),
+    redis = require('redis'),
     fs = require('fs'),
     passport = require('passport'),
     logger = require('mean-logger');
