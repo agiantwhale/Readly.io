@@ -19,9 +19,9 @@ var config = require('./config/config'),
 if (config.redis) {
     kue.redis.createClient = function() {
         var rtg = url.parse(config.redis);
-        var redis = redis.createClient(rtg.port, rtg.hostname);
-        redis.auth(rtg.auth.split(":")[1]);
-        return redis;
+        var client = redis.createClient(rtg.port, rtg.hostname);
+        client.auth(rtg.auth.split(":")[1]);
+        return client;
     };
 }
 
