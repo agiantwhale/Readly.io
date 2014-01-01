@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var express = require('express'),
+    url = require('url'),
     kue = require('kue'),
     fs = require('fs'),
     passport = require('passport'),
