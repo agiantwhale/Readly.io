@@ -10,6 +10,7 @@
     "bootstrap": "latest",
     "angular-bootstrap": "latest",
     "angular-ui-utils": "latest",
-    "Flat-UI": "~2.1.1"
+    "Flat-UI": "~2.1.1",
+    "font-awesome": "~4.0.3"
   }
 }
