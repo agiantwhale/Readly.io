@@ -68,7 +68,6 @@ module.exports = function(urls, hashtags, user) {
 
             User.findById(user._id, function(err, user) {
                 if(err) return;
-                console.log(user);
 
                 var post = new Post({
                     url: url,

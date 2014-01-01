@@ -1,14 +1,17 @@
-<section data-ng-controller="PostsController" data-ng-init="findOne()">
-    <span>{{article.created | date:'medium'}}</span>/
-    <span>{{article.user.name}}</span>
-    <h2>{{article.title}}</h2>
-    <div data-ng-show="global.user._id == article.user._id">
-        <a class="btn" href="/#!/articles/{{article._id}}/edit">
-            <i class="icon-edit"></i>
-        </a> 
-        <a class="btn" data-ng-click="remove();">
-            <i class="icon-trash"></i>
-        </a>
+<section data-ng-controller="PostsController" data-ng-init="find()">
+    <div class="intro"></div>
+    <div class="container">
+        <div class="h6">Awaiting links</div>
+        <div class="row" data-ng-repeat="post in posts" data-ng-if="!!post.next_reminder">
+            <div class="col-md-3">{{post.next_reminder}}</div>
+            <div class="col-md-8">{{post.url}}</div>
+            <div class="col-md-1">Delete</div>
+        </div>
+        <div class="h6">Previous links</div>
+        <div class="row" data-ng-repeat="post in posts" data-ng-if="!post.next_reminder">
+            <div class="col-md-3">{{post.prev_reminders[post.prev_reminders.length-1]}}</div>
+            <div class="col-md-8">{{post.url}}</div>
+            <div class="col-md-1">Delete</div>
+        </div>
     </div>
-    <div>{{article.content}}</div>
 </section>

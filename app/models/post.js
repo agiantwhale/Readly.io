@@ -35,7 +35,10 @@ var PostSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'User'
     },
-    jobId: Number
+    jobId: {
+        type: Number,
+        select: false
+    }
 });
 
 PostSchema.methods = {
@@ -48,21 +51,20 @@ PostSchema.methods = {
         .exec(function(err, post) {
             if (!delay) delay = moment(post.next_reminder).subtract(moment());
 
-            var job = jobs.create('emailPost', post);
+            var job = jobs.create('emailPost', post).delay(delay.valueOf()).save();
 
             // add the completion handler
+            // it seems i can't do this because of a bug in Kue that generates a race condition
+            // see https://github.com/LearnBoost/kue/issues/183
+            /*
             job.on('complete', function() {
+                console.log('Email sent!');
                 post.prev_reminders.push(post.next_reminder);
                 post.next_reminder = null;
                 post.jobId = null;
                 post.save();
             });
-
-            // delay the job
-            job.delay(delay.valueOf());
-
-            // save the job
-            job.save();
+            */
 
             post.jobId = job.id;
             post.save();
@@ -91,12 +93,22 @@ PostSchema.post('delete', function(post) {
     post.cancelPost();
 });
 
-PostSchema.statics.initJobs = function() {
-    this.find().populate('user').exec(function(err, posts) {
-        posts.forEach(function(post) {
-            if(moment().isBefore(post.next_reminder)) post.schedulePost();
+PostSchema.statics = {
+    initJobs: function() {
+        this.find().populate('user').exec(function(err, posts) {
+            posts.forEach(function(post) {
+                if(moment().isBefore(post.next_reminder)) post.schedulePost();
+            });
         });
-    });
+    },
+
+    load: function(id, cb) {
+        this.findOne({
+            _id: id
+        })
+        .populate('user')
+        .exec(cb);
+    }
 };
 
 /**

@@ -50,6 +50,15 @@ var jobs = kue.createQueue(),
 
 jobs.promote();
 
+jobs.on('job complete', function(id){
+    kue.Job.get(id, function(err, job){
+        if (err) return;
+        job.remove(function(err){
+            if (err) return;
+        });
+    });
+});
+
 jobs.process('twitterStream', 100, function(job, done) {
     console.log('Stream opened!');
     // Don't close this job, we need to close it when user changes email address
@@ -94,14 +103,24 @@ jobs.process('twitterStream', 100, function(job, done) {
 
 jobs.process('emailPost', 100, function(job, done) {
     var post = job.data;
-    console.log(post);
     var mailOptions = {
         to: post.user.email,
         subject: "ReadAgain Reminder",
         text: post.url
     };
     mailer(mailOptions);
+
+    // this is a hack, but due to the race condition preventing complete handler
+    // look at /model/post.js
+    mongoose.model('Post')
+    .findById(post._id)
+    .select('prev_reminders next_reminder jobId')
+    .exec(function(err, post) {
+        post.prev_reminders.push(post.next_reminder);
+        post.next_reminder = null;
+        post.jobId = null;
+        post.save();
+    });
+
     done();
 });
-
-kue.app.listen(3001);

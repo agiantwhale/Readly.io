@@ -66,23 +66,16 @@ module.exports = function(app, passport, auth) {
     app.get('/auth/google/callback', passport.authenticate('google', {
         failureRedirect: '/signin'
     }), users.authCallback);
-*/
+    */
 
     //Finish with setting up the userId param
     //app.param('userId', users.user);
 
-    //Article Routes
-    /*
-    var articles = require('../app/controllers/articles');
-    app.get('/articles', articles.all);
-    app.post('/articles', auth.requiresLogin, articles.create);
-    app.get('/articles/:articleId', articles.show);
-    app.put('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.update);
-    app.del('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy);
-
-    //Finish with setting up the articleId param
-    app.param('articleId', articles.article);
-    */
+    // post routes
+    var posts = require('../app/controllers/posts');
+    app.get('/posts', auth.requiresLogin, posts.all); // list articles
+    app.del('/posts/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.destroy); // delete it
+    app.param('postId', posts.post);
 
     //Home route
     var index = require('../app/controllers/index');
