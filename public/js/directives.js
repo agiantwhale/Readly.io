@@ -12,7 +12,9 @@ angular
 .directive('fill', function($window) {
     return function(scope, element) {
         element.css({
-            'min-height': ($window.innerHeight - 120 - 300 - 50 - 60 + 10).toString() + 'px'
+            'min-height': ($window.innerHeight - 120 - 300 - 50 - 60 + 10).toString() + 'px',
+            'margin-top': '50px',
+            'margin-bottom': '50px'
         });
     };
 });
