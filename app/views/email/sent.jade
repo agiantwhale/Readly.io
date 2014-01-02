@@ -8,12 +8,15 @@ block content
                     .col-md-6
                         h4 Email sent.
                         p An email should arrive within a few minutes.
+                            br
+                            br
+                            | Make sure to check your spam folder!
                     .col-md-6
                         //- img(src="/img/background/index.png", alt="Browser", style="width: 100%")
         .padding
     .container(fill)
-        p An email has been sent to your inbox. Make sure to check your spam folder!
+        br
         p Didn't receive it?
-        a(href="/reset") Retry with a different address.
+        a.btn.btn-primary(href="/retry") Retry with a different address.
     script(type="text/javascript").
         window.user = !{user};

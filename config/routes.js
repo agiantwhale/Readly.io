@@ -5,6 +5,7 @@ module.exports = function(app, passport, auth) {
     var users = require('../app/controllers/users');
     //app.get('/signin', users.signin);
     //app.get('/signup', users.signup);
+    app.get('/retry', auth.requiresLogin, users.retry);
     app.get('/email', auth.requiresLogin, users.email);
     app.post('/email', auth.requiresLogin, users.sendVerifyMail);
     app.get('/verify/:verifyId', users.verify);

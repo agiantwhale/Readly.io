@@ -19,6 +19,10 @@ exports.authCallback = function(req, res) {
     res.redirect('/');
 };
 
+exports.retry = function(req, res) {
+    res.redirect('/email');
+};
+
 /**
  * Show email form
  */
