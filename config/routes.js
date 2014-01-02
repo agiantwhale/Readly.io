@@ -8,6 +8,7 @@ module.exports = function(app, passport, auth) {
     app.get('/email', auth.requiresLogin, users.email);
     app.post('/email', auth.requiresLogin, users.sendVerifyMail);
     app.get('/verify/:verifyId', users.verify);
+    app.get('/unsubscribe/:verifyId', users.unsubscribe);
 
     app.get('/signout', users.signout);
     //app.get('/users/me', users.me);

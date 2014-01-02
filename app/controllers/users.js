@@ -59,8 +59,22 @@ exports.sendVerifyMail = function(req, res) {
 
         var mailOptions = {
             to: email,
-            subject: 'Verify your email!',
-            text: config.url + '/verify/' + verificationCode.toString(),
+            subject: 'Readly verification email',
+            html:
+            '<img src="' + config.url + '/img/logo/dark.png' + '" alt="Readly.io" style="width: 100%"><p>'+
+            '<br>Hello there!'+
+            '<br>Please click on the following link to verify your email address.'+
+            '<br><a href="' + config.url + '/verify/' + verificationCode + '">Verify me!</a>'+
+            '<br>Thank you!'+
+            '<br>- Readly Team</p>',
+
+            text:
+            'Readly.io'+
+            '\nHello there!'+
+            '\nPlease visit the link to verify your email address.'+
+            '\n'+ config.url + '/verify/' + verificationCode +
+            '\nThank you!'+
+            '\n-Readly Team',
         };
         mailer(mailOptions);
 
@@ -86,7 +100,7 @@ exports.verify = function(req, res) {
     }).exec(function(err, user) {
         if (err) res.send(500, 'Internal server error');
         user.verified = true;
-        user.verificationCode = null;
+        user.verificationCode = hat();
         user.save(function(err) {
             if (err) {
                 console.log(err);
@@ -94,6 +108,29 @@ exports.verify = function(req, res) {
             } else {
                 user.openStream();
                 res.render('email/success', {
+                    user: user ? JSON.stringify(user) : 'null'
+                });
+            }
+        });
+    });
+};
+
+exports.unsubscribe = function(req, res) {
+    var verificationCode = req.params.verifyId;
+
+    User.findOne({
+        'verificationCode': verificationCode
+    }).exec(function(err, user) {
+        if(err) res.send(500, 'Internal server error');
+        user.verified = false;
+        user.email = null;
+        user.verificationCode = null;
+        user.save(function(err) {
+            if(err) {
+                res.send(500, 'Internal server error');
+            } else {
+                user.closeStream();
+                res.render('email/unsubscribe', {
                     user: user ? JSON.stringify(user) : 'null'
                 });
             }

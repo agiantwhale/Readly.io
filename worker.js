@@ -5,6 +5,7 @@ var fs = require('fs'),
     url = require('url'),
     kue = require('kue'),
     redis = require('redis'),
+    embedly = require('embedly'),
     twitter = require('twitter'),
     mongoose = require('mongoose');
 
@@ -31,18 +32,18 @@ mongoose.connect(config.db);
 // Bootstrap models
 var models_path = __dirname + '/app/models';
 var walk = function(path) {
-    fs.readdirSync(path).forEach(function(file) {
-        var newPath = path + '/' + file;
-        var stat = fs.statSync(newPath);
-        if (stat.isFile()) {
-            if (/(.*)\.(js$|coffee$)/.test(file)) {
-                require(newPath);
+        fs.readdirSync(path).forEach(function(file) {
+            var newPath = path + '/' + file;
+            var stat = fs.statSync(newPath);
+            if (stat.isFile()) {
+                if (/(.*)\.(js$|coffee$)/.test(file)) {
+                    require(newPath);
+                }
+            } else if (stat.isDirectory()) {
+                walk(newPath);
             }
-        } else if (stat.isDirectory()) {
-            walk(newPath);
-        }
-    });
-};
+        });
+    };
 walk(models_path);
 
 var jobs = kue.createQueue(),
@@ -50,10 +51,10 @@ var jobs = kue.createQueue(),
 
 jobs.promote();
 
-jobs.on('job complete', function(id){
-    kue.Job.get(id, function(err, job){
+jobs.on('job complete', function(id) {
+    kue.Job.get(id, function(err, job) {
         if (err) return;
-        job.remove(function(err){
+        job.remove(function(err) {
             if (err) return;
         });
     });
@@ -62,7 +63,6 @@ jobs.on('job complete', function(id){
 jobs.process('twitterStream', 100, function(job, done) {
     console.log('Stream opened!');
     // Don't close this job, we need to close it when user changes email address
-
     var user = job.data;
     /*
      *  User
@@ -79,7 +79,7 @@ jobs.process('twitterStream', 100, function(job, done) {
 
     twit.stream('statuses/filter', {
         follow: user.twitter.profile.id_str,
-        track: "readagain"
+        track: 'readly'
     }, function(stream) {
         stream.on('data', function(data) {
             if (data.entities) {
@@ -103,23 +103,62 @@ jobs.process('twitterStream', 100, function(job, done) {
 
 jobs.process('emailPost', 100, function(job, done) {
     var post = job.data;
-    var mailOptions = {
-        to: post.user.email,
-        subject: "Readly article reminder",
-        text: post.url
-    };
-    mailer(mailOptions);
 
-    // this is a hack, but due to the race condition preventing complete handler
-    // look at /model/post.js
-    mongoose.model('Post')
-    .findById(post._id)
-    .select('prev_reminders next_reminder jobId')
-    .exec(function(err, post) {
-        post.prev_reminders.push(post.next_reminder);
-        post.next_reminder = null;
-        post.jobId = null;
-        post.save();
+    new embedly({
+        key: config.embedlyKey
+    }, function(err, api) {
+        if (err) {
+            console.error('Error creating Embedly api');
+            return;
+        }
+
+        api.extract({
+            url: post.url,
+            maxwidth: 500
+        }, function(err, results) {
+            if (err) {
+                console.log('Embedly request failed.');
+                return;
+            }
+
+            var result = results[0];
+            var description = result.description;
+            var title = result.title;
+
+            var mailOptions = {
+                to: post.user.email,
+                subject: 'Readly: ' + title,
+                html:
+                '<img src="' + config.url + '/img/logo/dark.png' + '" alt="Readly.io" style="width: 100%"><p>' + 
+                '<br>Title: ' + title + 
+                '<br>Description: ' + description +  
+                '<br><a href="' + post.url + '">Visit link</a>' + 
+                '<br>' +
+                '<br>' +
+                '<br>' +
+                '<br><a href="' + config.url + '/unsubscribe/' + post.user.verificationCode + '">Unsubscribe</a> from Readly' + 
+                '<br>- Readly Team</p>',
+                text: 'Readly.io' + 
+                '\nTitle:' + title + 
+                '\nDescription: ' + description + 
+                '\nLink: ' + post.url + 
+                '\n' + 
+                '\n' +
+                '\n' +
+                '\nUnsubscribe from Readly: ' + config.url + '/unsubscribe/' + post.user.verificationCode + 
+                '\n- Readly Team'
+            };
+            mailer(mailOptions);
+
+            // this is a hack, but due to the race condition preventing complete handler
+            // look at /model/post.js
+            mongoose.model('Post').findById(post._id).select('prev_reminders next_reminder jobId').exec(function(err, post) {
+                post.prev_reminders.push(post.next_reminder);
+                post.next_reminder = null;
+                post.jobId = null;
+                post.save();
+            });
+        })
     });
 
     done();

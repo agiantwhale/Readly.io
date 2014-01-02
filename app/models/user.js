@@ -5,7 +5,6 @@
  */
 var mongoose = require('mongoose'),
     kue = require('kue'),
-    check = require('validator').check,
     Schema = mongoose.Schema,
     jobs = kue.createQueue();
 
@@ -80,9 +79,5 @@ UserSchema.statics.initStreams = function() {
         });
     });
 };
-
-UserSchema.path('email').validate(function(email) {
-    return check(email).isEmail();
-}, 'Email cannot be blank');
 
 mongoose.model('User', UserSchema);

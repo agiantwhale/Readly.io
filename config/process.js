@@ -35,22 +35,20 @@ function unitToDate(unitString, num) {
 }
 
 module.exports = function(urls, hashtags, user) {
-
-    console.log(user);
     // check if user is verified
     if (!user.verified) return;
 
     if (urls.length === 0) {
         return;
     }
-
+    
     var valid = false;
     // reverse notation
-    var pattern = new RegExp("^[y|m|w|d|h|m|s]([0-9]+)(?=niagadaer$)");
+    var pattern = new RegExp("^[y|m|w|d|h|m|s]([0-9]+)(?=yldaer$)");
     var dateString = "";
     for (var iter = 0; iter < hashtags.length; iter++) {
         var hashtag = hashtags[iter];
-        if (hashtag == "readagain") {
+        if (hashtag == "readly") {
             valid = true;
             dateString = "d3";
             break;

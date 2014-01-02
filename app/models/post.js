@@ -46,10 +46,25 @@ PostSchema.methods = {
     schedulePost: function(delay) {
         var model = this.model(this.constructor.modelName);
         model.findById(this._id)
-        .select('user url')
-        .populate('user')
+        .select({
+            'url': 1,
+            'user': 1
+        })
+        .populate({
+            path: 'user',
+            select: 'email verificationCode verified'
+        })
         .exec(function(err, post) {
-            if (!delay) delay = moment(post.next_reminder).subtract(moment());
+            console.log(post);
+
+            if(!post.user.verified) return;
+
+            var delayMs = 0;
+            if(delay) {
+                delayMs = delay.valueOf();
+            } else if (!delay && moment().isBefore(post.next_reminder)) {
+                delayMs = moment(post.next_reminder).subtract(moment()).valueOf();
+            }
 
             var job = jobs.create('emailPost', post).delay(delay.valueOf()).save();
 
