@@ -4,7 +4,7 @@ module.exports = {
     url:"http://readly.io",
     db: process.env.MONGOHQ_URL,
     app: {
-        name: "Readly"
+        name: "Readly.io"
     },
     embedlyKey: process.env.EMBEDLY_KEY,
     redis: process.env.REDISTOGO_URL,
