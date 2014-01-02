@@ -30,7 +30,7 @@ if (config.redis) {
     kue.redis.createClient = function() {
         var rtg = url.parse(config.redis);
         var client = redis.createClient(rtg.port, rtg.hostname);
-        client.auth(rtg.auth.split(":")[1]);
+        client.auth(rtg.auth.split(':')[1]);
         return client;
     };
 }

@@ -86,6 +86,7 @@ exports.verify = function(req, res) {
     }).exec(function(err, user) {
         if (err) res.send(500, 'Internal server error');
         user.verified = true;
+        user.verificationCode = null;
         user.save(function(err) {
             if (err) {
                 console.log(err);

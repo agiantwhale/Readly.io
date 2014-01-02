@@ -1,9 +1,12 @@
 extends ../layouts/default
 
 block content
-    .intro
-        .container
-    .container
-        p Verification successful!
+    .top
+        .head-region
+            .container
+                h4 Verification successful.
+                p Now you can start tweeting those links you love.
+        .padding
+    .container(fill)
     script(type="text/javascript").
         window.user = !{user};

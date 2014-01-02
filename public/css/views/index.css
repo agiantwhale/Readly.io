@@ -1,15 +1,8 @@
-.intro {
-    padding-top: 150px;
-    min-height: 500px;
-    background-color: #1abc9c;
-    background-size: cover;
-}
-
-.intro a {
+.top a {
     font-family: 'Arvo', Georgia, Times, serif !important;
 }
 
-.intro button {
+.top button {
     border-style: solid;
     border-color: white;
     border-width: 2px;
@@ -19,19 +12,14 @@
     padding: 5px;
 }
 
-.intro>.container {
-    vertical-align: center;
-}
-
-.intro>.padding {
-    background-color: #387F71;
-    margin-top: 50px;
-    height: 50px;
-}
-
 .info {
-    padding-top: 70px;
+    padding-top: 20px;
     padding-bottom: 50px;
+}
+
+.info>.container>h6 {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .info>div {
@@ -45,6 +33,8 @@
 
 .infotext {
     padding: 0.5em;
+    font-size: 0.9em;
+    line-height: 1em;
 }
 
 .faq {

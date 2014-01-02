@@ -4,7 +4,7 @@ module.exports = {
     url:"http://readagain-dev.herokuapp.com",
     db: process.env.MONGOHQ_URL,
     app: {
-        name: "ReadAgain"
+        name: "Readly"
     },
     redis: process.env.REDISTOGO_URL,
     mail: {

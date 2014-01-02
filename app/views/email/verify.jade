@@ -1,22 +1,29 @@
 extends ../layouts/default
 
 block content
-    .intro
-        .container
-    .container
+    .top
+        .head-region
+            .container
+                .row
+                    .col-md-6
+                        h4 Register or change your email.
+                        p We need an email address to send your links to.
+                    .col-md-6
+                        img(src="/img/background/index.png", alt="Browser", style="width: 100%")
+        .padding
+    .container(fill)
         if message && message.length
             br
             .alert.alert-danger
                 strong #{message}
-        h6 Welcome!
-        p Verify your email account to get started.
+        p Usually the verification email will arrive within a couple of minutes. Make sure to check the junk folder along with the inbox!
         form(role="form", action="/email", method="post")
             .row
-                .col-md-9
+                .col-md-10
                     .form-group
                         label(for="email").sr-only Email address
                         input(type="email", name="email", id="email").form-control
-                .col-md-3
-                    button(type="submit").btn.btn-primary Verify
+                .col-md-2
+                    button(type="submit").btn.btn-primary.btn-block Verify
     script(type="text/javascript").
         window.user = !{user};

@@ -16,6 +16,7 @@ angular.module('raPosts').controller('PostsController', ['$scope', '$routeParams
     $scope.find = function() {
         Posts.query(function(posts) {
             $scope.posts = posts;
+            console.log(posts);
         });
     };
 }]);

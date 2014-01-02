@@ -17,6 +17,9 @@ function unitToDate(unitString, num) {
     case "w":
         unitString = "weeks";
         break;
+    case "d":
+        unitString = "days";
+        break;
     case "h":
         unitString = "hours";
         break;

@@ -4,7 +4,7 @@ var nodemailer = require("nodemailer"),
 var smtpTransport = nodemailer.createTransport("SMTP", config.mail);
 
 module.exports = function(mailOptions) {
-    mailOptions.from = "noreply@readagain.io";
+    mailOptions.from = "noreply@readly.io";
     smtpTransport.sendMail(mailOptions, function(error, response) {
         if (error) {
             console.log(error);

@@ -20,7 +20,7 @@ if (config.redis) {
     kue.redis.createClient = function() {
         var rtg = url.parse(config.redis);
         var client = redis.createClient(rtg.port, rtg.hostname);
-        client.auth(rtg.auth.split(":")[1]);
+        client.auth(rtg.auth.split(':')[1]);
         return client;
     };
 }
@@ -105,7 +105,7 @@ jobs.process('emailPost', 100, function(job, done) {
     var post = job.data;
     var mailOptions = {
         to: post.user.email,
-        subject: "ReadAgain Reminder",
+        subject: "Readly article reminder",
         text: post.url
     };
     mailer(mailOptions);

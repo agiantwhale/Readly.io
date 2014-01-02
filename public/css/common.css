@@ -17,20 +17,37 @@ h1, h2, h3, h4, h5, h6 {
 .wrap {
     min-height: 100%;
     height: auto;
-    margin: 0 auto -50px;
-    padding: 0 0 50px;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
 }
 
 .footer {
-    height: 80px; /* Let it bleed */
+    height: 60px; /* Let it bleed */
     background-color: #323232;
     color: white;
     text-align: center;
-    font-size: 12px !important;
 }
 
 /* End fo Sticky footer styles
 -------------------------------------------------- */
+
+.top {
+    background-color: #1abc9c;
+    padding-top: 120px;
+}
+
+.top>.head-region {
+    min-height: 300px;
+}
+
+.top>.padding {
+    background-color: #387F71;
+    height: 50px;
+}
+
+/*
+ * Navbar
+ */
 
 .navbar-wrapper {
     margin-top: 20px;

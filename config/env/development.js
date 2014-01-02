@@ -4,7 +4,7 @@ module.exports = {
     url:"http://localhost:3000",
     db: "mongodb://localhost/mean-dev",
     app: {
-        name: "ReadAgain"
+        name: "Readly"
     },
     mail: {
         service: "Gmail",
