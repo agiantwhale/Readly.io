@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    url:"http://readagain-dev.herokuapp.com",
+    url:"http://readly.io",
     db: process.env.MONGOHQ_URL,
     app: {
         name: "Readly"
@@ -21,9 +21,9 @@ module.exports = {
         callbackURL: "http://localhost:3000/auth/facebook/callback"
     },
     twitter: {
-        clientID: "5pPUdA7wN4fOjgpQyntw",
-        clientSecret: "rPrvoNVDj8CbwhTHqfZ94BnoFkwzRraxGyPWPxasE0",
-        callbackURL: "http://readagain-dev.herokuapp.com/auth/twitter/callback"
+        clientID: "yCse4wan08ilgIaVOarrA",
+        clientSecret: "NR5OJsrXoRGNI6uq6B1k9Owkmd9LoRmVj5uTps28obQ",
+        callbackURL: "http://readly.io/auth/twitter/callback"
     },
     github: {
         clientID: "APP_ID",
