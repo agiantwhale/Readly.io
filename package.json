@@ -45,7 +45,8 @@
     "validator": "~2.0.0",
     "kue": "~0.6.2",
     "redis": "~0.10.0",
-    "hat": "0.0.3"
+    "hat": "0.0.3",
+    "embedly": "~1.0.2"
   },
   "devDependencies": {
     "supertest": "latest",
