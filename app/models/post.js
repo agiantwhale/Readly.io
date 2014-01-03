@@ -60,7 +60,7 @@ PostSchema.methods = {
             if(!post.user.verified) return;
 
             var delayMs = 0;
-            if(delay) {
+            if(delay !== undefined && delay) {
                 delayMs = delay.valueOf();
             } else if (!delay && moment().isBefore(post.next_reminder)) {
                 delayMs = moment(post.next_reminder).subtract(moment()).valueOf();
