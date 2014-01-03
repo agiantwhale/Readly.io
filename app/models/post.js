@@ -66,7 +66,7 @@ PostSchema.methods = {
                 delayMs = moment(post.next_reminder).subtract(moment()).valueOf();
             }
 
-            var job = jobs.create('emailPost', post).delay(delay.valueOf()).save();
+            var job = jobs.create('emailPost', post).delay(delayMs).save();
 
             // add the completion handler
             // it seems i can't do this because of a bug in Kue that generates a race condition
