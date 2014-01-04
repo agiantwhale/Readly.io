@@ -43,7 +43,6 @@ var PostSchema = new Schema({
 });
 
 PostSchema.methods = {
-    //delay is a moment function
     schedulePost: function(delay) {
         var model = this.model(this.constructor.modelName);
         model.findById(this._id)
@@ -57,16 +56,8 @@ PostSchema.methods = {
         })
         .exec(function(err, post) {
             if(!post.user.verified) return;
-
-            var delayMs = 0;
-            if(delay !== undefined && delay) {
-                delayMs = delay.valueOf();
-            } else if (moment().isBefore(post.next_reminder)) {
-                delayMs = moment().diff(post.next_reminder);
-            }
-
             console.log('Delay: ' + delayMs);
-            var job = jobs.create('emailPost', post).delay(delayMs).save();
+            var job = jobs.create('emailPost', post).delay(delay).save();
 
             // add the completion handler
             // it seems i can't do this because of a bug in Kue that generates a race condition
@@ -112,9 +103,9 @@ PostSchema.statics = {
     initJobs: function() {
         this.find().populate('user').exec(function(err, posts) {
             posts.forEach(function(post) {
-                if(post.next_reminder && moment().isBefore(post.next_reminder)) {
+                if(post.next_reminder !== null && moment().isBefore(post.next_reminder)) {
                     console.log('Scheduling post: ' + post);
-                    post.schedulePost();
+                    post.schedulePost(moment().diff(post.next_reminder));
                 }
             });
         });

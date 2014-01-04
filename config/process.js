@@ -83,7 +83,7 @@ module.exports = function(urls, hashtags, user) {
                     console.log(post);
 
                     if(err) console.log(err);
-                    post.schedulePost(duration);
+                    post.schedulePost(duration.valueOf());
                 })
             });
         }
