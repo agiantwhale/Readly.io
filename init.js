@@ -60,5 +60,3 @@ console.log('Initializing streams...');
 mongoose.model('User').initStreams();
 console.log('Initializing jobs...');
 mongoose.model('Post').initJobs();
-
-process.exit();
