@@ -60,6 +60,42 @@ jobs.on('job complete', function(id) {
     });
 });
 
+/*
+var twit = new twitter({
+    consumer_key: config.twitter.clientID,
+    consumer_secret: config.twitter.clientSecret,
+    access_token_key: user.twitter.token,
+    access_token_secret: user.twitter.tokenSecret
+});
+
+twit.stream('statuses/filter', {
+    follow: user.twitter.profile.id_str,
+    track: 'readly'
+}, function(stream) {
+    stream.on('data', function(data) {
+        if (data.entities) {
+            mongoose.model('User').findOne({
+                'twitter.profile.id': data.user.id
+            }, function(err, readlyUser) {
+                if (err) return;
+
+                var urls = [];
+                for (var iter = 0; iter < data.entities.urls.length; iter++) {
+                    urls.push(data.entities.urls[iter].expanded_url);
+                }
+
+                var hashtags = [];
+                for (var iter = 0; iter < data.entities.hashtags.length; iter++) {
+                    hashtags.push(data.entities.hashtags[iter].text);
+                }
+
+                processPost(urls, hashtags, readlyUser);
+            });
+        }
+    });
+});
+*/
+
 jobs.process('twitterStream', 100, function(job, done) {
     console.log('Stream opened!');
     // Don't close this job, we need to close it when user changes email address
@@ -82,12 +118,18 @@ jobs.process('twitterStream', 100, function(job, done) {
         track: 'readly'
     }, function(stream) {
         stream.on('data', function(data) {
-            if (data.entities) {
+            if (data.entities && data.user) {
+                if(data.user.id !== user.twitter.profile.id) {
+                    return;
+                }
+
                 mongoose
                 .model('User')
                 .findOne({
                     'twitter.profile.id': data.user.id
                 }, function(err, readlyUser) {
+                    if(err) return;
+
                     var urls = [];
                     for (var iter = 0; iter < data.entities.urls.length; iter++) {
                         urls.push(data.entities.urls[iter].expanded_url);
@@ -134,25 +176,8 @@ jobs.process('emailPost', 100, function(job, done) {
             var mailOptions = {
                 to: post.user.email,
                 subject: 'Readly: ' + title,
-                html:
-                '<img src="' + config.url + '/img/logo/dark.png' + '" alt="Readly.io" style="width: 100%"><p>' + 
-                '<br>Title: ' + title + 
-                '<br>Description: ' + description +  
-                '<br><a href="' + post.url + '">Visit link</a>' + 
-                '<br>' +
-                '<br>' +
-                '<br>' +
-                '<br><a href="' + config.url + '/unsubscribe/' + post.user.verificationCode + '">Unsubscribe</a> from Readly' + 
-                '<br>- Readly Team</p>',
-                text: 'Readly.io' + 
-                '\nTitle:' + title + 
-                '\nDescription: ' + description + 
-                '\nLink: ' + post.url + 
-                '\n' + 
-                '\n' +
-                '\n' +
-                '\nUnsubscribe from Readly: ' + config.url + '/unsubscribe/' + post.user.verificationCode + 
-                '\n- Readly Team'
+                html: '<img src="' + config.url + '/img/logo/dark.png' + '" alt="Readly.io" style="width: 100%"><p>' + '<br>Title: ' + title + '<br>Description: ' + description + '<br><a href="' + post.url + '">Visit link</a>' + '<br>' + '<br>' + '<br>' + '<br><a href="' + config.url + '/unsubscribe/' + post.user.verificationCode + '">Unsubscribe</a> from Readly' + '<br>- Readly Team</p>',
+                text: 'Readly.io' + '\nTitle:' + title + '\nDescription: ' + description + '\nLink: ' + post.url + '\n' + '\n' + '\n' + '\nUnsubscribe from Readly: ' + config.url + '/unsubscribe/' + post.user.verificationCode + '\n- Readly Team'
             };
             mailer(mailOptions);
 
