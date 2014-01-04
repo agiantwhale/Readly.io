@@ -83,17 +83,23 @@ jobs.process('twitterStream', 100, function(job, done) {
     }, function(stream) {
         stream.on('data', function(data) {
             if (data.entities) {
-                var urls = [];
-                for (var iter = 0; iter < data.entities.urls.length; iter++) {
-                    urls.push(data.entities.urls[iter].expanded_url);
-                }
+                mongoose
+                .model('User')
+                .findOne({
+                    'twitter.profile.id': data.user.id
+                }, function(err, readlyUser) {
+                    var urls = [];
+                    for (var iter = 0; iter < data.entities.urls.length; iter++) {
+                        urls.push(data.entities.urls[iter].expanded_url);
+                    }
 
-                var hashtags = [];
-                for (var iter = 0; iter < data.entities.hashtags.length; iter++) {
-                    hashtags.push(data.entities.hashtags[iter].text);
-                }
+                    var hashtags = [];
+                    for (var iter = 0; iter < data.entities.hashtags.length; iter++) {
+                        hashtags.push(data.entities.hashtags[iter].text);
+                    }
 
-                processPost(urls, hashtags, user);
+                    processPost(urls, hashtags, readlyUser);
+                });
             }
         });
     });

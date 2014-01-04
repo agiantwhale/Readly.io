@@ -78,6 +78,8 @@ module.exports = function(urls, hashtags, user) {
                     next_reminder: moment().add(duration).toDate()
                 });
                 post.save(function(err) {
+                    console.log(post);
+
                     if(err) console.log(err);
                     post.schedulePost(duration);
                 })

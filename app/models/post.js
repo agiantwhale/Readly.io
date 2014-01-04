@@ -55,8 +55,6 @@ PostSchema.methods = {
             select: 'email verificationCode verified'
         })
         .exec(function(err, post) {
-            console.log(post);
-
             if(!post.user.verified) return;
 
             var delayMs = 0;
@@ -112,7 +110,10 @@ PostSchema.statics = {
     initJobs: function() {
         this.find().populate('user').exec(function(err, posts) {
             posts.forEach(function(post) {
-                if(moment().isBefore(post.next_reminder)) post.schedulePost();
+                if(post.next_reminder && moment().isBefore(post.next_reminder)) {
+                    console.log('Scheduling post: ' + post);
+                    post.schedulePost();
+                }
             });
         });
     },

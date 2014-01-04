@@ -34,8 +34,6 @@ exports.email = function(req, res) {
 };
 
 exports.sendVerifyMail = function(req, res) {
-    console.log(req.body);
-
     var user = req.user;
     var email = sanitize(req.body.email).trim();
     var emailValid = check(email).isEmail();
