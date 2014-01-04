@@ -65,6 +65,7 @@ PostSchema.methods = {
                 delayMs = moment().diff(post.next_reminder);
             }
 
+            console.log('Delay: ' + delayMs);
             var job = jobs.create('emailPost', post).delay(delayMs).save();
 
             // add the completion handler
