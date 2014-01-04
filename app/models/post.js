@@ -105,7 +105,7 @@ PostSchema.statics = {
             posts.forEach(function(post) {
                 if(post.next_reminder !== null && moment().isBefore(post.next_reminder)) {
                     console.log('Scheduling post: ' + post);
-                    post.schedulePost(moment().diff(post.next_reminder));
+                    post.schedulePost(moment(post.next_reminder).diff(moment()));
                 }
             });
         });
