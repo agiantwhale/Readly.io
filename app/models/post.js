@@ -56,7 +56,7 @@ PostSchema.methods = {
         })
         .exec(function(err, post) {
             if(!post.user.verified) return;
-            console.log('Delay: ' + delayMs);
+            console.log('Delay: ' + delay);
             var job = jobs.create('emailPost', post).delay(delay).save();
 
             // add the completion handler
