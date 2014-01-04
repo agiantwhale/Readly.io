@@ -55,29 +55,8 @@ var walk = function(path) {
 };
 walk(models_path);
 
-//bootstrap passport config
-require('./config/passport')(passport);
-
-var app = express();
-
-//express settings
-require('./config/express')(app, passport, db);
-
-//Bootstrap routes
-require('./config/routes')(app, passport, auth);
-
-//Start the app by listening on <port>
-var port = process.env.PORT || config.port;
-app.listen(port);
-console.log('Express app started on port ' + port);
-
-//Initializing logger
-logger.init(app, passport, mongoose);
-
-//Logger
-process.on('uncaughtException', function (err) {
-    console.log('Caught exception: ' + err);
-});
-
-//expose app
-exports = module.exports = app;
+// initialize Streams/Jobs/Whatnot
+console.log('Initializing streams...');
+mongoose.model('User').initStreams();
+console.log('Initializing jobs...');
+mongoose.model('Post').initJobs();

@@ -2,3 +2,7 @@
 # prettify email
 # create unsubscribe link
 # fix intro header size for non-index pages.
+
+
+# multiple emails sent on startup is the fault of having the jobs & post initialization in server.js (where there are two nodes for that)
+# have a separate init.js script to fix.
