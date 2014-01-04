@@ -6,6 +6,8 @@ var mongoose = require('mongoose'),
     moment = require('moment'),
     config = require('./config');
 
+moment().format();
+
 function unitToDate(unitString, num) {
     switch (unitString) {
     case "y":

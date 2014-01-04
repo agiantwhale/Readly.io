@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
     check = require('validator').check,
     jobs = kue.createQueue();
 
+moment().format();
 
 /**
  * Link Schema
@@ -60,8 +61,8 @@ PostSchema.methods = {
             var delayMs = 0;
             if(delay !== undefined && delay) {
                 delayMs = delay.valueOf();
-            } else if (!delay && moment().isBefore(post.next_reminder)) {
-                delayMs = moment(post.next_reminder).subtract(moment()).valueOf();
+            } else if (moment().isBefore(post.next_reminder)) {
+                delayMs = moment().diff(post.next_reminder);
             }
 
             var job = jobs.create('emailPost', post).delay(delayMs).save();
