@@ -46,7 +46,8 @@
     "kue": "~0.6.2",
     "redis": "~0.10.0",
     "hat": "0.0.3",
-    "embedly": "~1.0.2"
+    "embedly": "~1.0.2",
+    "async": "~0.2.9"
   },
   "devDependencies": {
     "supertest": "latest",

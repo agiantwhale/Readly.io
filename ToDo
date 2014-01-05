@@ -2,7 +2,9 @@
 # prettify email
 # create unsubscribe link
 # fix intro header size for non-index pages.
-
-
 # multiple emails sent on startup is the fault of having the jobs & post initialization in server.js (where there are two nodes for that)
 # have a separate init.js script to fix.
++ configure a way to have mutliple reminders through repeated hashtag processing
++ test if adding new posts through sending a private mention or message to "ReadlyIO" is possible
++ search for Search Engine Optimization tactics
++ remove web crawlers off the page.
