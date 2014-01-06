@@ -9,6 +9,7 @@ var express = require('express'),
     redis = require('redis'),
     fs = require('fs'),
     passport = require('passport'),
+    moment = require('moment'),
     async = require('async'),
     logger = require('mean-logger');
 
@@ -57,32 +58,49 @@ var walk = function(path) {
 walk(models_path);
 
 async.series([
+
 function(callback) {
     //Initialize streams...
     console.log('Initializing streams...');
     var User = mongoose.model('User');
     User.find({}, function(err, users) {
-        for(var i = 0; i < users.length; i++) {
-            users[i].openStream();
+        var processArray = [];
+        for (var i = 0; i < users.length; i++) {
+            var user = users[i];
+            processArray.push(function(cb) {
+                user.openStream(cb);
+            });
         }
 
-        callback();
+        async.parallel(processArray, function(err, results) {
+            console.log('Finished initializing streams!');
+            callback();
+        });
     });
-},
-function(callback) {
+}, function(callback) {
     //Initialize jobs...
     console.log('Initializing jobs...');
     var Post = mongoose.model('Post');
-    Post.find({}, function(err, posts) {
-        for(var i = 0; i < posts.length; i++) {
-            posts[i].schedulePost();
+    Post.find({}).populate('user').exec(function(err, posts) {
+        var processArray = []
+        for (var i = 0; i < posts.length; i++) {
+            var post = posts[i];
+
+            if (post.next_reminder !== null && moment().isBefore(post.next_reminder)) {
+                console.log('Scheduling post: ' + post);
+                processArray.push(function(cb) {
+                    post.schedulePost(moment(post.next_reminder).diff(moment()), cb);
+                });
+            }
         };
 
-        callback();
+        async.parallel(processArray, function(err, results) {
+            console.log('Finished scheduling posts!');
+            callback();
+        });
     });
-}],
-function(err, results) {
-    if(err) console.log('Error: ' + err);
+}], function(err, results) {
+    if (err) console.log('Error: ' + err);
     console.log('Complete!');
-    process.exit();
+    //process.exit();
 });

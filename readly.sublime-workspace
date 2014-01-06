@@ -1,0 +1,1029 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"mode",
+				"Model	import"
+			],
+			[
+				"schedule",
+				"schedulePost"
+			],
+			[
+				"stre",
+				"streams"
+			],
+			[
+				"Initiali",
+				"Initializing"
+			],
+			[
+				"resu",
+				"results"
+			],
+			[
+				"embedl",
+				"embedlyKey"
+			],
+			[
+				"requi",
+				"require"
+			],
+			[
+				"on",
+				"onclick	Attr"
+			],
+			[
+				"pos",
+				"post"
+			],
+			[
+				"article",
+				"article"
+			],
+			[
+				"require",
+				"requiresLogin"
+			],
+			[
+				"schu",
+				"schedulePost"
+			],
+			[
+				"verifi",
+				"verified"
+			],
+			[
+				"pro",
+				"profile"
+			],
+			[
+				"valu",
+				"valueOf"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"tok",
+				"tokenSecret"
+			],
+			[
+				"twitte",
+				"twitter	(?)"
+			],
+			[
+				"stri",
+				"stringify(value)"
+			],
+			[
+				"font-",
+				"font-family"
+			],
+			[
+				"http",
+				"https"
+			],
+			[
+				"twitt",
+				"twitter"
+			],
+			[
+				"nodemo",
+				"nodemon1"
+			],
+			[
+				"nu",
+				"null"
+			],
+			[
+				"stream",
+				"stream"
+			],
+			[
+				"localh",
+				"localhost:3000"
+			],
+			[
+				"streamInfo",
+				"streamInfos"
+			],
+			[
+				"streamInf",
+				"streamInfo"
+			],
+			[
+				"streamin",
+				"streamInfos"
+			],
+			[
+				"twit",
+				"twitter_stream"
+			],
+			[
+				"twitter",
+				"twitter_stream"
+			],
+			[
+				"decod",
+				"decoded"
+			],
+			[
+				"padding",
+				"padding"
+			],
+			[
+				"paddi",
+				"padding"
+			],
+			[
+				"schedu",
+				"schedules"
+			],
+			[
+				"Us",
+				"UserSchema"
+			],
+			[
+				"sche",
+				"scheduleJob"
+			],
+			[
+				"ur",
+				"url"
+			],
+			[
+				"ma",
+				"mailOptions"
+			],
+			[
+				"hashta",
+				"hashtags"
+			],
+			[
+				"te",
+				"text"
+			],
+			[
+				"hasht",
+				"hashtag"
+			],
+			[
+				"init",
+				"initForAll"
+			],
+			[
+				"client",
+				"clientID"
+			],
+			[
+				"marg",
+				"margin"
+			],
+			[
+				"req",
+				"req"
+			],
+			[
+				"expire",
+				"expired"
+			],
+			[
+				"getTi",
+				"getTime"
+			],
+			[
+				"token",
+				"token"
+			],
+			[
+				"json",
+				"jsonp"
+			],
+			[
+				"sign",
+				"signup"
+			],
+			[
+				"to",
+				"token"
+			],
+			[
+				"border",
+				"border-style"
+			],
+			[
+				"route",
+				"routeParams"
+			],
+			[
+				"lis",
+				"listen"
+			],
+			[
+				"authenti",
+				"authenticated"
+			],
+			[
+				"passp",
+				"passport"
+			],
+			[
+				"cookie",
+				"cookieParser"
+			],
+			[
+				"passpor",
+				"passportSocketIo"
+			],
+			[
+				"stopped_floo",
+				"stopped_floors_going_down"
+			],
+			[
+				"peopl",
+				"people_picked_up_going_up"
+			],
+			[
+				"destinatio",
+				"destination"
+			],
+			[
+				"highes",
+				"highest_switchable_floor"
+			],
+			[
+				"final",
+				"final_floor_order"
+			],
+			[
+				"stopped_floors_going",
+				"stopped_floors_going_up"
+			],
+			[
+				"lowes",
+				"lowest_switchable_floor"
+			],
+			[
+				"destina",
+				"destination_floor"
+			],
+			[
+				"people_pciked_up_goi",
+				"people_picked_up_going_down	statement"
+			],
+			[
+				"people_picked",
+				"people_picked_up_going_up"
+			],
+			[
+				"current",
+				"current_floor	statement"
+			],
+			[
+				"people",
+				"people"
+			],
+			[
+				"Per",
+				"Person	class"
+			],
+			[
+				"per",
+				"person_name"
+			],
+			[
+				"peple_",
+				"people_count"
+			],
+			[
+				"readlin",
+				"readlines	function"
+			],
+			[
+				"artic",
+				"articles"
+			],
+			[
+				"articl",
+				"article"
+			],
+			[
+				"art",
+				"articles"
+			],
+			[
+				"Artic",
+				"Article"
+			],
+			[
+				"collec",
+				"collection"
+			],
+			[
+				"res",
+				"result"
+			],
+			[
+				"Acce",
+				"accessToken"
+			],
+			[
+				"access",
+				"access_token"
+			],
+			[
+				"serialize",
+				"Serialize"
+			],
+			[
+				"django",
+				"django_facebook	import"
+			],
+			[
+				"Story",
+				"StoryResource	class"
+			],
+			[
+				"Colle",
+				"CollectionResource"
+			],
+			[
+				"dja",
+				"DjangoAuthorization	class"
+			],
+			[
+				"publish",
+				"publisher"
+			],
+			[
+				"request",
+				"request_start_date	statement"
+			],
+			[
+				"collection",
+				"collection	statement"
+			],
+			[
+				"reques",
+				"request_end_date	statement"
+			],
+			[
+				"return",
+				"return_data	statement"
+			],
+			[
+				"colle",
+				"collect"
+			],
+			[
+				"Colec",
+				"CollectionResource"
+			],
+			[
+				"resource",
+				"resource_name"
+			],
+			[
+				"like_",
+				"like_info"
+			],
+			[
+				"friend",
+				"friends_list	statement"
+			],
+			[
+				"open",
+				"open_facebook	import"
+			],
+			[
+				"face",
+				"facebook_data	statement"
+			],
+			[
+				"auth",
+				"auths	import"
+			],
+			[
+				"defau",
+				"default_settings	import"
+			],
+			[
+				"co",
+				"conf	import"
+			],
+			[
+				"API",
+				"Api	class"
+			],
+			[
+				"pub",
+				"pub_date	statement"
+			],
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"margi",
+				"margin"
+			],
+			[
+				"curr",
+				"currentEntryIndex"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"User",
+				"UserObjectsOnlyAuthorization	class"
+			],
+			[
+				"is",
+				"is_authenticated"
+			],
+			[
+				"user",
+				"user"
+			],
+			[
+				"momen",
+				"MomentResource	import"
+			],
+			[
+				"Mome",
+				"MomentResource	class"
+			],
+			[
+				"serial",
+				"serializeObject"
+			],
+			[
+				"authentica",
+				"authentication"
+			],
+			[
+				"con",
+				"contrib	import"
+			],
+			[
+				"padd",
+				"padding"
+			],
+			[
+				"paddin",
+				"padding-top"
+			],
+			[
+				"reque",
+				"request"
+			],
+			[
+				"spi",
+				"spiders	import"
+			],
+			[
+				"flas",
+				"Flask	import"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"sea",
+				"search_results_box"
+			],
+			[
+				"model",
+				"model_to_dict"
+			],
+			[
+				"login",
+				"login_required"
+			],
+			[
+				"shor",
+				"short_url"
+			],
+			[
+				"userin",
+				"userinfo"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 400.0,
+		"selected_items":
+		[
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remvoe",
+				"Package Control: Remove Package"
+			],
+			[
+				"unin",
+				"Snippet: Function"
+			],
+			[
+				"Space G",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"code",
+				"Format Code"
+			],
+			[
+				"format",
+				"Format Code"
+			],
+			[
+				"packa",
+				"Preferences: Browse Packages"
+			],
+			[
+				"",
+				"AngularJS: Rebuild Search Index"
+			],
+			[
+				"package",
+				"Preferences: Browse Packages"
+			],
+			[
+				"package control ins",
+				"Package Control: Install Package"
+			],
+			[
+				"package control in",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 457.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"view.encoding()",
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read()) ",
+			" import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read()) ",
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())",
+			"import urllib2,os; pf='Package Control.sublime-package'; ipp = sublime.installed_packages_path(); os.makedirs( ipp ) if not os.path.exists(ipp) else None; urllib2.install_opener( urllib2.build_opener( urllib2.ProxyHandler( ))); open( os.path.join( ipp, pf), 'wb' ).write( urllib2.urlopen( 'http://sublime.wbond.net/' +pf.replace( ' ','%20' )).read()); print( 'Please restart Sublime Text to finish installation')"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/ijlee/dev/backdrop/backdrop.sublime-project",
+		"/Users/ijlee/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/ijlee/dev/backdrop/.codeintel/config",
+		"/Users/ijlee/Library/Application Support/Sublime Text 3/Packages/User/SublimeCodeIntel.sublime-settings",
+		"/Users/ijlee/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/SublimeCodeIntel.sublime-settings",
+		"/Users/ijlee/dev/backdrop/backdrop/settings.py",
+		"/Users/ijlee/dev/backdrop/dropper/models.py",
+		"/Volumes/YACReader-6.5.3 MacOSX-Intel/README.txt",
+		"/Users/ijlee/dev/readme/.profile",
+		"/Users/ijlee/dev/readme/config/env/heroku_dev.js",
+		"/Users/ijlee/dev/readme/public/js/controllers/posts.js",
+		"/Users/ijlee/dev/readme/public/views/post.html",
+		"/Users/ijlee/dev/readme/public/js/services/global.js",
+		"/Users/ijlee/dev/readme/public/js/controllers/index.js",
+		"/Users/ijlee/dev/readme/config/middlewares/authorization.js",
+		"/Users/ijlee/dev/readme/public/js/controllers/header.js",
+		"/Users/ijlee/dev/readme/public/views/header.html",
+		"/Users/ijlee/dev/readme/config/env/all.js",
+		"/Users/ijlee/dev/readme/app/models/post.js",
+		"/Users/ijlee/dev/readme/ToDo",
+		"/Users/ijlee/dev/readme/public/js/services/posts.js",
+		"/Users/ijlee/dev/readme/public/js/app.js",
+		"/Users/ijlee/dev/readme/public/js/config.js",
+		"/Users/ijlee/dev/readme/config/twitter_stream.js",
+		"/Users/ijlee/dev/readme/config/schedules.js",
+		"/Users/ijlee/dev/readme/gruntfile.js",
+		"/Users/ijlee/dev/readme/public/views/email.html",
+		"/Users/ijlee/dev/readme/public/views/sent.html",
+		"/Users/ijlee/dev/readme/public/views/verified.html",
+		"/Users/ijlee/dev/readme/public/views/email/email.html",
+		"/Users/ijlee/dev/readme/config/stream.js",
+		"/Users/ijlee/dev/readme/config/post.js",
+		"/Users/ijlee/dev/readme/config/config.js",
+		"/Users/ijlee/dev/readme/public/views/index.html",
+		"/Users/ijlee/dev/readme/app/views/includes/foot.jade",
+		"/Users/ijlee/dev/readme/public/js/stream.js",
+		"/Users/ijlee/dev/readme/app/models/user.js",
+		"/Users/ijlee/dev/readme/app/controllers/index.js",
+		"/Users/ijlee/dev/readme/node_modules/.bin/express",
+		"/Users/ijlee/dev/readme/config/env/development.js",
+		"/Users/ijlee/dev/readme/config/mailer.js",
+		"/Users/ijlee/dev/readme/app/views/layouts/default.jade",
+		"/Users/ijlee/dev/readme/app/views/email/verify.jade",
+		"/Users/ijlee/dev/readme/config/passport.js",
+		"/Users/ijlee/dev/readme/server.js",
+		"/Users/ijlee/dev/readme/app/views/index.jade",
+		"/Users/ijlee/dev/readme/app/views/users/signin.jade",
+		"/Users/ijlee/dev/readme/config/routes.js",
+		"/Users/ijlee/dev/readme/app/controllers/users.js",
+		"/Users/ijlee/dev/readme/public/css/index.css",
+		"/Users/ijlee/dev/readme/public/css/common.css",
+		"/Users/ijlee/dev/readme/app/views/includes/head.jade",
+		"/Users/ijlee/dev/readme/public/css/views/index.css",
+		"/Users/ijlee/dev/readme/dropall.js",
+		"/Users/ijlee/dev/readme/app/controllers/posts.js",
+		"/Users/ijlee/dev/readme/README.md",
+		"/Users/ijlee/dev/readme/package.json",
+		"/Users/ijlee/dev/smallchat/node_modules/bower/node_modules/open/lib/open.js",
+		"/Users/ijlee/dev/readme/Notes",
+		"/Users/ijlee/dev/helpmeread/config/env/development.js",
+		"/Users/ijlee/dev/smallchat/package.json",
+		"/Users/ijlee/dev/smallchat/config/env/heroku.json",
+		"/Users/ijlee/dev/smallchat/README.md",
+		"/Users/ijlee/BlueJ/Scramble/Board.java",
+		"/Users/ijlee/BlueJ/Scramble/ACSL.DAT",
+		"/Users/ijlee/Downloads/compsci/ACSL_Assignment_01/Reader.java",
+		"/Users/ijlee/Downloads/nudity/nudity.py",
+		"/Users/ijlee/Downloads/ACSL/Board.java",
+		"/Users/ijlee/forge-workspace/smallchat/src/index.html",
+		"/Users/ijlee/forge-workspace/smallchat/src/js/main.js",
+		"/Users/ijlee/dev/smallchat/config/env/development.json",
+		"/Users/ijlee/dev/smallchat/public/js/config.js",
+		"/Users/ijlee/dev/smallchat/app/views/includes/foot.jade",
+		"/Users/ijlee/dev/smallchat/app/views/includes/head.jade",
+		"/Users/ijlee/dev/smallchat/app/controllers/rooms.js",
+		"/Users/ijlee/dev/smallchat/public/js/services/chats.js",
+		"/Users/ijlee/dev/smallchat/public/views/index.html",
+		"/Users/ijlee/dev/smallchat/public/js/services/rooms.js",
+		"/Users/ijlee/dev/smallchat/app/models/room.js",
+		"/Users/ijlee/dev/smallchat/public/views/header.html",
+		"/Users/ijlee/dev/smallchat/public/js/app.js",
+		"/Users/ijlee/dev/smallchat/public/lib/bootstrap/.bower.json",
+		"/Users/ijlee/Desktop/Ideas",
+		"/Users/ijlee/dev/smallchat/public/js/controllers/index.js",
+		"/Users/ijlee/dev/smallchat/server.js",
+		"/Users/ijlee/dev/smallchat/config/express.js",
+		"/Users/ijlee/dev/smallchat/node_modules/socket.io/node_modules/socket.io-client/lib/socket.js",
+		"/Users/ijlee/dev/smallchat/app/models/user.js",
+		"/Users/ijlee/dev/smallchat/config/sockets.js",
+		"/Users/ijlee/dev/smallchat/public/js/controllers/header.js",
+		"/Users/ijlee/dev/smallchat/app/controllers/index.js",
+		"/Users/ijlee/dev/smallchat/app/models/session.js",
+		"/Users/ijlee/dev/smallchat/app/controllers/messages.js",
+		"/Users/ijlee/dev/doc/Elevator/sample.txt",
+		"/Users/ijlee/Bomb/bomb.py",
+		"/Users/ijlee/Library/Application Support/Steam/SteamApps/common/KillingFloor/System/defuser.ini",
+		"/Users/ijlee/Library/Application Support/Steam/SteamApps/common/KillingFloor/System/Build.ini",
+		"/Users/ijlee/Library/Application Support/Steam/SteamApps/common/KillingFloor/System/Core.int",
+		"/Users/ijlee/Library/Application Support/Steam/SteamApps/common/KillingFloor/System/Engine.int",
+		"/Users/ijlee/Library/Application Support/Steam/SteamApps/common/KillingFloor/System/Setup.int",
+		"/Users/ijlee/Library/Application Support/Steam/SteamApps/common/KillingFloor/System/Window.int",
+		"/Users/ijlee/Library/Application Support/Steam/SteamApps/common/KillingFloor/System/Default.ini",
+		"/Users/ijlee/dev/smallchat/gruntfile.js",
+		"/Users/ijlee/dev/smallchat/config/chat.js",
+		"/Users/ijlee/dev/smallchat/app/models/message.js",
+		"/Users/ijlee/dev/smallchat/bower.json",
+		"/Users/ijlee/dev/smallchat/app/controllers/users.js",
+		"/Users/ijlee/dev/smallchat/config/passport.js",
+		"/Users/ijlee/dev/smallchat/app/views/index.jade",
+		"/Users/ijlee/dev/smallchat/config/env/travis.json",
+		"/Users/ijlee/dev/smallchat/config/env/test.json",
+		"/Users/ijlee/dev/smallchat/config/env/production.json",
+		"/Users/ijlee/dev/smallchat/app/views/users/auth.jade",
+		"/Users/ijlee/dev/smallchat/app/views/users/signup.jade",
+		"/Users/ijlee/dev/smallchat/app/views/users/signin.jade",
+		"/Users/ijlee/dev/smallchat/config/routes.js",
+		"/Users/ijlee/dev/Elevator/sample.txt",
+		"/Users/ijlee/dev/Elevator/program.py",
+		"/Users/ijlee/dev/Elevator/person.py",
+		"/Users/ijlee/dev/Elevator/untitled",
+		"/Users/ijlee/dev/frag/public/js/app.js",
+		"/Users/ijlee/dev/frag/public/lib/angular-masonry/angular-masonry.js",
+		"/Users/ijlee/dev/frag/public/lib/angular-masonry/bower.json",
+		"/Users/ijlee/dev/frag/public/js/services/collections.js",
+		"/Users/ijlee/dev/frag/public/js/controllers/collections.js",
+		"/Users/ijlee/dev/frag/config/middlewares/authorization.js",
+		"/Users/ijlee/dev/frag/config/routes.js",
+		"/Users/ijlee/dev/frag/app/controllers/users.js"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Users/ijlee/dev/readme,-/Users/ijlee/dev/readme/node_modules/*,-/Users/ijlee/dev/readme/public/lib/*",
+			"/Users/ijlee/dev/readme,,-/Users/ijlee/dev/readme/node_modules/*",
+			"/Users/ijlee/dev/readme",
+			"/Users/ijlee/dev/readme/config,/Users/ijlee/dev/readme/app",
+			"/Users/ijlee/dev/readme",
+			"/Users/ijlee/dev/smallchat/",
+			"/Users/ijlee/dev/smallchat/node_modules/socket.io/lib,/Users/ijlee/dev/smallchat",
+			"/Users/ijlee/dev/smallchat/node_modules/socket.io/lib",
+			"<open folders>",
+			"/Users/iljaelee/Documents/Heroku"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"undefined",
+			"send",
+			"hat",
+			"Initializing",
+			"initializing",
+			"delayMs",
+			"schedulePost",
+			"next_reminder",
+			"moment",
+			"delayMs",
+			"schedulePost",
+			"console.log",
+			"schedulePost",
+			"console.log",
+			"Post.load",
+			"schedulePost",
+			"scheduleJob",
+			"article",
+			"email",
+			"twitterStream",
+			"openStream",
+			"init",
+			"schedulePost",
+			"isBefore",
+			"valueOf",
+			".valueOf",
+			"our",
+			"we",
+			"my",
+			"I",
+			"appName",
+			"NODE_ENV",
+			"embedlyKey",
+			"invalid email",
+			"mailOptions",
+			" = null",
+			"schedulePost",
+			"verified",
+			"schedulePost",
+			"select",
+			"select('user",
+			"user.email",
+			"readagain",
+			"readagan",
+			"emailPost",
+			"job complete",
+			"emailPost",
+			"console.log(post",
+			"console.log(user",
+			"readagain",
+			"emailPost",
+			"mailer",
+			".intro",
+			"ReadAgain",
+			"readagain",
+			"ReadAgain",
+			"verificationCode",
+			"email",
+			"client.auth",
+			"createQueue",
+			"client",
+			"cleint",
+			"config.redis",
+			"kue.createQueue",
+			"openStream",
+			"jobId",
+			"console.log(this",
+			"console.log(user)",
+			"console.log",
+			"findOne",
+			"findById",
+			"console.log",
+			"openStream",
+			".stripTokenInfo()",
+			"stripTokenInfo",
+			"schedulePost",
+			"findOne",
+			"dev",
+			"JSON",
+			"font",
+			"size",
+			"font-size",
+			"jwt",
+			"jwt-simple",
+			"findOne",
+			"exec(",
+			"verify",
+			"signin",
+			"user.twitter.toke",
+			"user.twitter.token",
+			"req.user",
+			"mean.articles",
+			"twitter_stream",
+			"next",
+			"user.verified",
+			"all",
+			"mean.system",
+			"process",
+			"dev",
+			":dev",
+			"nodemon",
+			"job",
+			"_",
+			"require('mongoose')",
+			"mongoose.connection",
+			"./post",
+			"post.js",
+			"'kue'",
+			"kue",
+			"user.email",
+			"openStream",
+			".faq",
+			"angular-bootstrap",
+			"jade",
+			"'User'",
+			"mongoose.model('User')",
+			"mongoose('User')",
+			"User",
+			"Post",
+			"User",
+			"Post",
+			"in",
+			"config/express",
+			"config",
+			"MEAN - A Modern Stack",
+			"MEAN",
+			"MEAN - A Modern Stack",
+			"appName"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"",
+			"raSystem",
+			"footer",
+			"post",
+			"passport.authenticate('bearer', { session: false })",
+			"going_up",
+			"lowest",
+			"people_count",
+			"floors_count",
+			"floorsCount",
+			"peopleCount",
+			"Collections",
+			"fql",
+			"",
+			"owner",
+			"thewhitebox"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "readly.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"",
+				"linkmanager/forms.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 281.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

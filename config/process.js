@@ -43,7 +43,7 @@ module.exports = function(urls, hashtags, user) {
     if (urls.length === 0) {
         return;
     }
-    
+
     var valid = false;
     // reverse notation
     var pattern = new RegExp("^[y|m|w|d|h|m|s]([0-9]+)(?=yldaer$)");
@@ -71,20 +71,16 @@ module.exports = function(urls, hashtags, user) {
             var url = urls[iter];
             var duration = unitToDate(dateString[0], parseInt(dateString.slice(1, dateString.length).split("").reverse().join("")));
 
-            User.findById(user._id, function(err, user) {
-                if(err) return;
+            var post = new Post({
+                url: url,
+                user: user,
+                next_reminder: moment().add(duration).toDate()
+            });
+            post.save(function(err) {
+                console.log(post);
 
-                var post = new Post({
-                    url: url,
-                    user: user,
-                    next_reminder: moment().add(duration).toDate()
-                });
-                post.save(function(err) {
-                    console.log(post);
-
-                    if(err) console.log(err);
-                    post.schedulePost(duration.valueOf());
-                })
+                if (err) console.log(err);
+                post.schedulePost(duration.valueOf());
             });
         }
     }

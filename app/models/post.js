@@ -43,7 +43,7 @@ var PostSchema = new Schema({
 });
 
 PostSchema.methods = {
-    schedulePost: function(delay) {
+    schedulePost: function(delay, cb) {
         var model = this.model(this.constructor.modelName);
         model.findById(this._id)
         .select({
@@ -51,16 +51,21 @@ PostSchema.methods = {
             'user': 1
         })
         .populate({
+            // it seems i can't do this because of a 
             path: 'user',
             select: 'email verificationCode verified'
         })
         .exec(function(err, post) {
-            if(!post.user.verified) return;
-            console.log('Delay: ' + delay);
-            var job = jobs.create('emailPost', post).delay(delay).save();
+            if(!post.user.verified) {
+                if(cb) cb();
+                return;
+            }
 
-            // add the completion handler
-            // it seems i can't do this because of a bug in Kue that generates a race condition
+            console.log('Scheduling post: ' + post.id);
+
+            var job = jobs.create('Post_Email', post._id).delay(delay).save();
+
+            // add the completion handlerbug in Kue that generates a race condition
             // see https://github.com/LearnBoost/kue/issues/183
             /*
             job.on('complete', function() {
@@ -73,14 +78,26 @@ PostSchema.methods = {
             */
 
             post.jobId = job.id;
-            post.save();
+            post.save(function(err) {
+                if(err) {
+                    console.error('Error while scheduling post: ' + post.id);
+                }
+
+                if(cb) cb();
+            });
         });
     },
 
-    cancelPost: function() {
+    cancelPost: function(cb) {
         var post = this;
         jobs.get(post.jobId, function(err, job) {
-            if (err) return; // job is already removed/doesn't exist
+            if (err) {
+                if(cb) cb();
+                return;
+            }
+
+            console.log('Canceling post: ' + post.id);
+
             job.remove();
         });
     }

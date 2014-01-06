@@ -46,30 +46,55 @@ var UserSchema = new Schema({
 });
 
 UserSchema.methods = {
-    openStream: function() {
-        var model = this.model(this.constructor.modelName);
-        model.findById(this._id)
-        .select('email verified twitter.profile twitter.token twitter.tokenSecret')
+    openStream: function(cb) {
+        var user = this;
+        var model = user.model(user.constructor.modelName);
+        model
+        .findById(user._id)
         .exec(function(err, user) {
             // user isn't verified
-            if (!user.verified) return;
+            if (!user.verified) {
+                console.log(user.twitter_name + ' is an unverified user! Skipping stream...');
+                if(cb) cb();
+                return;
+            }
 
-            var job = jobs.create('twitterStream', user).save();
+            console.log('Opening Twitter stream for ' + user.twitter_name);
+
+            var job = jobs.create('User_TwitterStream', user._id).save();
             user.twitter.streamId = job.id;
             user.save(function(err) {
-                if (err) console.log(err);
+                if (err) {
+                    console.error('Error occured! Error: ' + err + ', user:' + user.twitter_name);
+                } else {
+                    console.log('Stream open request sent successfully.');
+                }
+
+                if(cb) cb();
             });
         });
     },
 
-    closeStream: function() {
+    closeStream: function(cb) {
         var user = this;
         kue.Job.get(user.twitter.streamId, function(err, job) {
-            if (err) return;
+            if (err) {
+                if(cb) cb();
+                return;
+            }
+
+            console.log('Closing Twitter stream for ' + user.twitter_name);
+
             job.remove();
+
+            if(cb) cb();
         });
     }
 };
+
+UserSchema.virtual('twitter_name').get(function() {
+    return '@'+this.twitter.profile.screen_name;
+});
 
 UserSchema.statics.initStreams = function() {
     this.find({}, function(err, users) {

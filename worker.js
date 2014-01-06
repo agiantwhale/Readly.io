@@ -55,44 +55,49 @@ jobs.on('job complete', function(id) {
     kue.Job.get(id, function(err, job) {
         if (err) return;
         job.remove(function(err) {
-            if (err) return;
+            if (err) {
+                console.err('Error removing job ' + job.id + '!');
+            }
         });
     });
 });
 
-jobs.process('twitterStream', 100, function(job, done) {
-    console.log('Stream opened!');
-    // Don't close this job, we need to close it when user changes email address
-    var user = job.data;
-    /*
-     *  User
-     *      -token
-     *      -tokenSecret
-     *      -profile
-     */
-    var twit = new twitter({
-        consumer_key: config.twitter.clientID,
-        consumer_secret: config.twitter.clientSecret,
-        access_token_key: user.twitter.token,
-        access_token_secret: user.twitter.tokenSecret
-    });
+jobs.process('User_TwitterStream', 100, function(job, done) {
+    var User = mongoose.model('User');
 
-    twit.stream('statuses/filter', {
-        follow: user.twitter.profile.id_str,
-        track: 'readly'
-    }, function(stream) {
-        stream.on('data', function(data) {
-            if (data.entities && data.user) {
-                if(data.user.id !== user.twitter.profile.id) {
-                    return;
-                }
+    User.findById(job.data).select('verified twitter.profile twitter.token twitter.tokenSecret').exec(function(err, user) {
+        if (err) {
+            console.err('Invalid id sent to User_TwitterStream.');
+            done();
+            return;
+        }
 
-                mongoose
-                .model('User')
-                .findOne({
-                    'twitter.profile.id': data.user.id
-                }, function(err, readlyUser) {
-                    if(err) return;
+        console.log('Stream started on worker process for ' + user.twitter_name); //prototype functions are lost in data translation
+        /*
+         *  User
+         *      -token
+         *      -tokenSecret
+         *      -profile
+         */
+        var twit = new twitter({
+            consumer_key: config.twitter.clientID,
+            consumer_secret: config.twitter.clientSecret,
+            access_token_key: user.twitter.token,
+            access_token_secret: user.twitter.tokenSecret
+        });
+
+        twit.stream('statuses/filter', {
+            follow: user.twitter.profile.id_str,
+            track: 'readly'
+        }, function(stream) {
+            stream.on('data', function(data) {
+                if (!user.verified) return;
+
+                if (data.entities && data.user) {
+                    // avoid dupes when opening multiple streams
+                    if (data.user.id !== user.twitter.profile.id) {
+                        return;
+                    }
 
                     var urls = [];
                     for (var iter = 0; iter < data.entities.urls.length; iter++) {
@@ -104,57 +109,67 @@ jobs.process('twitterStream', 100, function(job, done) {
                         hashtags.push(data.entities.hashtags[iter].text);
                     }
 
-                    processPost(urls, hashtags, readlyUser);
-                });
-            }
+                    processPost(urls, hashtags, user);
+                }
+            });
         });
-    });
 
-    done();
+        done();
+
+    });
 });
 
-jobs.process('emailPost', 100, function(job, done) {
-    var post = job.data;
+jobs.process('Post_Email', 100, function(job, done) {
+    var Post = mongoose.model('Post');
 
-    new embedly({
-        key: config.embedlyKey
-    }, function(err, api) {
-        if (err) {
-            console.error('Error creating Embedly api');
-            return;
-        }
+    Post.findById(job.data).select('url user prev_reminders next_reminder jobId').populate({
+        path: 'user',
+        select: 'email twitter.profile verificationCode'
+    }).exec(function(err, post) {
+        var user = post.user;
 
-        api.extract({
-            url: post.url,
-            maxwidth: 500
-        }, function(err, results) {
+        console.log('Post (' + post.id + ') sending to ' + user.twitter_name);
+
+        new embedly({
+            key: config.embedlyKey
+        }, function(err, api) {
             if (err) {
-                console.log('Embedly request failed.');
+                console.error('Error creating Embedly api');
+                done();
                 return;
             }
 
-            var result = results[0];
-            var description = result.description;
-            var title = result.title;
+            api.extract({
+                url: post.url,
+                maxwidth: 500
+            }, function(err, results) {
+                if (err) {
+                    console.log('Embedly request failed.');
+                    done();
+                    return;
+                }
 
-            var mailOptions = {
-                to: post.user.email,
-                subject: 'Readly: ' + title,
-                html: '<img src="' + config.url + '/img/logo/dark.png' + '" alt="Readly.io" style="width: 100%"><p>' + '<br>Title: ' + title + '<br>Description: ' + description + '<br><a href="' + post.url + '">Visit link</a>' + '<br>' + '<br>' + '<br>' + '<br><a href="' + config.url + '/unsubscribe/' + post.user.verificationCode + '">Unsubscribe</a> from Readly' + '<br>- Readly Team</p>',
-                text: 'Readly.io' + '\nTitle:' + title + '\nDescription: ' + description + '\nLink: ' + post.url + '\n' + '\n' + '\n' + '\nUnsubscribe from Readly: ' + config.url + '/unsubscribe/' + post.user.verificationCode + '\n- Readly Team'
-            };
-            mailer(mailOptions);
+                var result = results[0];
+                var description = result.description;
+                var title = result.title;
 
-            // this is a hack, but due to the race condition preventing complete handler
-            // look at /model/post.js
-            mongoose.model('Post').findById(post._id).select('prev_reminders next_reminder jobId').exec(function(err, post) {
+                var mailOptions = {
+                    to: user.email,
+                    subject: 'Readly: ' + title,
+                    html: '<img src="' + config.url + '/img/logo/dark.png' + '" alt="Readly.io" style="width: 100%"><p>' + '<br>Title: ' + title + '<br>Description: ' + description + '<br><a href="' + post.url + '">Visit link</a>' + '<br>' + '<br>' + '<br>' + '<br><a href="' + config.url + '/unsubscribe/' + user.verificationCode + '">Unsubscribe</a> from Readly' + '<br>- Readly Team</p>',
+                    text: 'Readly.io' + '\nTitle:' + title + '\nDescription: ' + description + '\nLink: ' + post.url + '\n' + '\n' + '\n' + '\nUnsubscribe from Readly: ' + config.url + '/unsubscribe/' + user.verificationCode + '\n- Readly Team'
+                };
+                mailer(mailOptions);
+
+                // this is a hack, but due to the race condition preventing complete handler
+                // look at /model/post.js
                 post.prev_reminders.push(post.next_reminder);
                 post.next_reminder = null;
                 post.jobId = null;
                 post.save();
-            });
-        })
-    });
+            })
+        });
 
-    done();
+        done();
+    });
 });
