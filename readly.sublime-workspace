@@ -519,13 +519,103 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "config/routes.js",
+			"settings":
+			{
+				"buffer_size": 1208,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "gruntfile.js",
+			"settings":
+			{
+				"buffer_size": 3152,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/user.js",
+			"settings":
+			{
+				"buffer_size": 2539,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/config.js",
+			"settings":
+			{
+				"buffer_size": 613,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/directives.js",
+			"settings":
+			{
+				"buffer_size": 523,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "worker.js",
+			"settings":
+			{
+				"buffer_size": 5818,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/users.js",
+			"settings":
+			{
+				"buffer_size": 5565,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/post.js",
+			"settings":
+			{
+				"buffer_size": 3491,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 84 files for \"schedulePost\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   44  \n   45  PostSchema.methods = {\n   46:     schedulePost: function(cb, delay) {\n   47          var model = this.model(this.constructor.modelName);\n   48          model.findById(this._id)\n   ..\n  123                  if(post.next_reminder !== null && moment().isBefore(post.next_reminder)) {\n  124                      console.log('Scheduling post: ' + post);\n  125:                     post.schedulePost(moment(post.next_reminder).diff(moment()));\n  126                  }\n  127              });\n\n/Users/ijlee/dev/readme/config/process.js:\n   84  \n   85                      if(err) console.log(err);\n   86:                     post.schedulePost(duration.valueOf());\n   87                  })\n   88              });\n\n/Users/ijlee/dev/readme/init.js:\n   90          for(var i = 0; i < posts.length; i++) {\n   91              processArray.push(function(cb) {\n   92:                 posts[i].schedulePost();\n   93              });\n   94          };\n\n4 matches across 3 files\n\n\nSearching 84 files for \"emailPost\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   64              console.log('Scheduling post: ' + post.id + ', by user: ' + user.twitter_name);\n   65  \n   66:             var job = jobs.create('emailPost', post).delay(delay).save();\n   67  \n   68              // add the completion handlerbug in Kue that generates a race condition\n\n/Users/ijlee/dev/readme/worker.js:\n  118  });\n  119  \n  120: jobs.process('emailPost', 100, function(job, done) {\n  121      var post = job.data;\n  122      var user = job.data;\n\n2 matches across 2 files\n\n\nSearching 84 files for \"twitterStream\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/user.js:\n   61              console.log('Opening Twitter stream for ' + user.twitter_name);\n   62  \n   63:             var job = jobs.create('twitterStream', user).save();\n   64              user.twitter.streamId = job.id;\n   65              user.save(function(err) {\n\n~/dev/readme/dump.rdb:\n    <binary>\n\n/Users/ijlee/dev/readme/worker.js:\n   63  });\n   64  \n   65: jobs.process('twitterStream', 100, function(job, done) {\n   66      // Don't close this job, we need to close it when user changes email address\n   67      var user = job.data;\n\n8 matches across 3 files\n\n\nSearching 84 files for \"twitter_name\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   62  \n   63              var user = post.user;\n   64:             console.log('Scheduling post: ' + post.id + ', by user: ' + user.twitter_name);\n   65  \n   66              var job = jobs.create('emailPost', post).delay(delay).save();\n   ..\n   81              post.save(function(err) {\n   82                  if(err) {\n   83:                     console.error('Error while scheduling post: ' + post.id + ', user: ' + user.twitter_name);\n   84                  }\n   85  \n   ..\n   97  \n   98              var user = post.user;\n   99:             console.log('Canceling post: ' + post.id + ', by user: ' + user.twitter_name);\n  100  \n  101              job.remove();\n\n/Users/ijlee/dev/readme/app/models/user.js:\n   55              // user isn't verified\n   56              if (!user.verified) {\n   57:                 console.log(user.twitter_name + ' is an unverified user! Skipping stream...');\n   58                  return cb();\n   59              }\n   60  \n   61:             console.log('Opening Twitter stream for ' + user.twitter_name);\n   62  \n   63              var job = jobs.create('twitterStream', user).save();\n   ..\n   65              user.save(function(err) {\n   66                  if (err) {\n   67:                     console.error('Error occured! Error: ' + err + ', user:' + user.twitter_name);\n   68                  } else {\n   69                      console.log('Stream opened successfully.');\n   ..\n   82              }\n   83  \n   84:             console.log('Closing Twitter stream for ' + user.twitter_name);\n   85  \n   86              job.remove();\n   ..\n   91  };\n   92  \n   93: UserSchema.virtual('twitter_name').get(function() {\n   94      return '@'+this.twitter.profile.screen_name;\n   95  });\n\n/Users/ijlee/dev/readme/worker.js:\n   67      var user = job.data;\n   68  \n   69:     console.log('Stream started on worker process for ' + user.twitter_name);\n   70  \n   71      /*\n   ..\n  122      var user = job.data;\n  123  \n  124:     console.log('Post ('+post.url+') scheduled on worker process for ' + user.twitter_name);\n  125  \n  126      new embedly({\n\n10 matches across 3 files\n\n\nSearching 84 files for \"twitterStream\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/user.js:\n   61              console.log('Opening Twitter stream for ' + user.twitter_name);\n   62  \n   63:             var job = jobs.create('twitterStream', user).save();\n   64              user.twitter.streamId = job.id;\n   65              user.save(function(err) {\n\n~/dev/readme/dump.rdb:\n    <binary>\n\n/Users/ijlee/dev/readme/worker.js:\n   63  });\n   64  \n   65: jobs.process('twitterStream', 100, function(job, done) {\n   66      // Don't close this job, we need to close it when user changes email address\n   67      var user = job.data;\n\n8 matches across 3 files\n\n\nSearching 84 files for \"emailPost\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   64              console.log('Scheduling post: ' + post.id + ', by user: ' + user.twitter_name);\n   65  \n   66:             var job = jobs.create('emailPost', post).delay(delay).save();\n   67  \n   68              // add the completion handlerbug in Kue that generates a race condition\n\n/Users/ijlee/dev/readme/worker.js:\n  118  });\n  119  \n  120: jobs.process('emailPost', 100, function(job, done) {\n  121      var post = job.data;\n  122      var user = job.data;\n\n2 matches across 2 files\n\n\nSearching 84 files for \"twitterStream\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/user.js:\n   61              console.log('Opening Twitter stream for ' + user.twitter_name);\n   62  \n   63:             var job = jobs.create('twitterStream', user).save();\n   64              user.twitter.streamId = job.id;\n   65              user.save(function(err) {\n\n~/dev/readme/dump.rdb:\n    <binary>\n\n/Users/ijlee/dev/readme/worker.js:\n   63  });\n   64  \n   65: jobs.process('twitterStream', 100, function(job, done) {\n   66      // Don't close this job, we need to close it when user changes email address\n   67      var user = job.data;\n\n8 matches across 3 files\n\n\nSearching 84 files for \"findByid\" (case sensitive)\n\n0 matches across 0 files\n\n\nSearching 84 files for \"findById\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   46      schedulePost: function(cb, delay) {\n   47          var model = this.model(this.constructor.modelName);\n   48:         model.findById(this._id)\n   49          .select({\n   50              'url': 1,\n\n/Users/ijlee/dev/readme/app/models/user.js:\n   50          var user = this;\n   51          var model = user.model(user.constructor.modelName);\n   52:         model.findById(user._id)\n   53          .select('email verified twitter.profile twitter.token twitter.tokenSecret')\n   54          .exec(function(err, user) {\n\n/Users/ijlee/dev/readme/config/process.js:\n   72              var duration = unitToDate(dateString[0], parseInt(dateString.slice(1, dateString.length).split(\"\").reverse().join(\"\")));\n   73  \n   74:             User.findById(user._id, function(err, user) {\n   75                  if(err) return;\n   76  \n\n/Users/ijlee/dev/readme/worker.js:\n   66  \n   67      mongoose.model('User')\n   68:     .findById(job.data)\n   69  \n   70  \n   ..\n  160              // this is a hack, but due to the race condition preventing complete handler\n  161              // look at /model/post.js\n  162:             mongoose.model('Post').findById(post._id).select('prev_reminders next_reminder jobId').exec(function(err, post) {\n  163                  post.prev_reminders.push(post.next_reminder);\n  164                  post.next_reminder = null;\n\n5 matches across 4 files\n\n\nSearching 84 files for \"twitterStream\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/user.js:\n   61              console.log('Opening Twitter stream for ' + user.twitter_name);\n   62  \n   63:             var job = jobs.create('twitterStream', user).save();\n   64              user.twitter.streamId = job.id;\n   65              user.save(function(err) {\n\n~/dev/readme/dump.rdb:\n    <binary>\n\n7 matches across 2 files\n\n\nSearching 84 files for \"emailPost\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   64              console.log('Scheduling post: ' + post.id + ', by user: ' + user.twitter_name);\n   65  \n   66:             var job = jobs.create('emailPost', post).delay(delay).save();\n   67  \n   68              // add the completion handlerbug in Kue that generates a race condition\n\n1 match in 1 file\n\n\nSearching 84 files for \"emailPost\" (case sensitive)\n\n0 matches across 0 files\n\n\nSearching 84 files for \"Post_Email\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   64              console.log('Scheduling post: ' + post.id + ', by user: ' + user.twitter_name);\n   65  \n   66:             var job = jobs.create('Post_Email', post).delay(delay).save();\n   67  \n   68              // add the completion handlerbug in Kue that generates a race condition\n\n/Users/ijlee/dev/readme/worker.js:\n  121  });\n  122  \n  123: jobs.process('Post_Email', 100, function(job, done) {\n  124      var Post = mongoose.model('Post');\n  125  \n\n2 matches across 2 files\n\n\nSearching 84 files for \"Post_Email\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   64              console.log('Scheduling post: ' + post.id + ', by user: ' + user.twitter_name);\n   65  \n   66:             var job = jobs.create('Post_Email', post).delay(delay).save();\n   67  \n   68              // add the completion handlerbug in Kue that generates a race condition\n\n/Users/ijlee/dev/readme/worker.js:\n  121  });\n  122  \n  123: jobs.process('Post_Email', 100, function(job, done) {\n  124      var Post = mongoose.model('Post');\n  125  \n\n2 matches across 2 files\n\n\nSearching 84 files for \"schedulePost\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   44  \n   45  PostSchema.methods = {\n   46:     schedulePost: function(delay, cb) {\n   47          var model = this.model(this.constructor.modelName);\n   48          model.findById(this._id)\n   ..\n  121                  if(post.next_reminder !== null && moment().isBefore(post.next_reminder)) {\n  122                      console.log('Scheduling post: ' + post);\n  123:                     post.schedulePost(moment(post.next_reminder).diff(moment()));\n  124                  }\n  125              });\n\n/Users/ijlee/dev/readme/config/process.js:\n   81  \n   82                  if (err) console.log(err);\n   83:                 post.schedulePost(function() {\n   84                      console.log('Post ' + post.id + ' scheduled!');\n   85                  }, duration.valueOf());\n\n/Users/ijlee/dev/readme/init.js:\n   91              var post = posts[i];\n   92              processArray.push(function(cb) {\n   93:                 post.schedulePost(cb);\n   94              });\n   95          };\n\n4 matches across 3 files\n\n\nSearching 84 files for \"schedulePost\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   44  \n   45  PostSchema.methods = {\n   46:     schedulePost: function(delay, cb) {\n   47          var model = this.model(this.constructor.modelName);\n   48          model.findById(this._id)\n   ..\n  121                  if(post.next_reminder !== null && moment().isBefore(post.next_reminder)) {\n  122                      console.log('Scheduling post: ' + post);\n  123:                     post.schedulePost(moment(post.next_reminder).diff(moment()));\n  124                  }\n  125              });\n\n/Users/ijlee/dev/readme/config/process.js:\n   81  \n   82                  if (err) console.log(err);\n   83:                 post.schedulePost(function() {\n   84                      console.log('Post ' + post.id + ' scheduled!');\n   85                  }, duration.valueOf());\n\n/Users/ijlee/dev/readme/init.js:\n   91              var post = posts[i];\n   92              processArray.push(function(cb) {\n   93:                 post.schedulePost(cb);\n   94              });\n   95          };\n\n4 matches across 3 files\n\n\nSearching 84 files for \"schedulePost\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   44  \n   45  PostSchema.methods = {\n   46:     schedulePost: function(delay, cb) {\n   47          var model = this.model(this.constructor.modelName);\n   48          model.findById(this._id)\n   ..\n  121                  if(post.next_reminder !== null && moment().isBefore(post.next_reminder)) {\n  122                      console.log('Scheduling post: ' + post);\n  123:                     post.schedulePost(moment(post.next_reminder).diff(moment()));\n  124                  }\n  125              });\n\n/Users/ijlee/dev/readme/config/process.js:\n   81  \n   82                  if (err) console.log(err);\n   83:                 post.schedulePost(function() {\n   84                      console.log('Post ' + post.id + ' scheduled!');\n   85                  }, duration.valueOf());\n\n/Users/ijlee/dev/readme/init.js:\n   92              var post = posts[i];\n   93              processArray.push(function(cb) {\n   94:                 post.schedulePost(moment(post.next_reminder).diff(moment()), cb);\n   95              });\n   96          };\n\n4 matches across 3 files\n\n\nSearching 84 files for \"schedulePost\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   44  \n   45  PostSchema.methods = {\n   46:     schedulePost: function(delay, cb) {\n   47          var model = this.model(this.constructor.modelName);\n   48          model.findById(this._id)\n   ..\n  121                  if(post.next_reminder !== null && moment().isBefore(post.next_reminder)) {\n  122                      console.log('Scheduling post: ' + post);\n  123:                     post.schedulePost(moment(post.next_reminder).diff(moment()));\n  124                  }\n  125              });\n\n/Users/ijlee/dev/readme/config/process.js:\n   81  \n   82                  if (err) console.log(err);\n   83:                 post.schedulePost(duration.valueOf(), function() {\n   84                      console.log('Post ' + post.id + ' scheduled!');\n   85                  });\n\n/Users/ijlee/dev/readme/init.js:\n   92              var post = posts[i];\n   93              processArray.push(function(cb) {\n   94:                 post.schedulePost(moment(post.next_reminder).diff(moment()), cb);\n   95              });\n   96          };\n\n4 matches across 3 files\n\n\nSearching 84 files for \"scheduled on worker process\" (case sensitive)\n\n/Users/ijlee/dev/readme/worker.js:\n  124          var user = post.user;\n  125  \n  126:         console.log('Post (' + post.url + ') scheduled on worker process for ' + user.twitter_name);\n  127  \n  128          new embedly({\n\n1 match in 1 file\n\n\nSearching 84 files for \"stream open request sent\" (case sensitive)\n\n0 matches across 0 files\n\n\nSearching 84 files for \"open request\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/user.js:\n   66                      console.error('Error occured! Error: ' + err + ', user:' + user.twitter_name);\n   67                  } else {\n   68:                     console.log('Stream open request sent successfully.');\n   69                  }\n   70  \n\n1 match in 1 file\n\n\nSearching 84 files for \"openStream\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/controllers/users.js:\n  109                  res.send(500, 'Internal server error');\n  110              } else {\n  111:                 user.openStream();\n  112                  res.render('email/success', {\n  113                      user: user ? JSON.stringify(user) : 'null'\n\n/Users/ijlee/dev/readme/app/models/user.js:\n   47  \n   48  UserSchema.methods = {\n   49:     openStream: function(cb) {\n   50          var user = this;\n   51          var model = user.model(user.constructor.modelName);\n   ..\n   96  UserSchema.statics.initStreams = function() {\n   97      this.find({}, function(err, users) {\n   98:         // users.forEach(twitter_stream.openStream);\n   99          users.forEach(function(user) {\n  100:             user.openStream();\n  101          });\n  102      });\n\n/Users/ijlee/dev/readme/init.js:\n   73              var user = users[i];\n   74              processArray.push(function(cb) {\n   75:                 user.openStream(cb);\n   76              });\n   77          }\n\n5 matches across 3 files\n\n\nSearching 84 files for \"openStream\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/controllers/users.js:\n  109                  res.send(500, 'Internal server error');\n  110              } else {\n  111:                 user.openStream();\n  112                  res.render('email/success', {\n  113                      user: user ? JSON.stringify(user) : 'null'\n\n/Users/ijlee/dev/readme/app/models/user.js:\n   47  \n   48  UserSchema.methods = {\n   49:     openStream: function(cb) {\n   50          var user = this;\n   51          var model = user.model(user.constructor.modelName);\n   ..\n   96  UserSchema.statics.initStreams = function() {\n   97      this.find({}, function(err, users) {\n   98:         // users.forEach(twitter_stream.openStream);\n   99          users.forEach(function(user) {\n  100:             user.openStream();\n  101          });\n  102      });\n\n/Users/ijlee/dev/readme/init.js:\n   73              var user = users[i];\n   74              processArray.push(function(cb) {\n   75:                 user.openStream(cb);\n   76              });\n   77          }\n\n5 matches across 3 files\n\n\nSearching 84 files for \"schedulePost\" (case sensitive)\n\n/Users/ijlee/dev/readme/app/models/post.js:\n   44  \n   45  PostSchema.methods = {\n   46:     schedulePost: function(delay, cb) {\n   47          var model = this.model(this.constructor.modelName);\n   48          model.findById(this._id)\n   ..\n  123                  if(post.next_reminder !== null && moment().isBefore(post.next_reminder)) {\n  124                      console.log('Scheduling post: ' + post);\n  125:                     post.schedulePost(moment(post.next_reminder).diff(moment()));\n  126                  }\n  127              });\n\n/Users/ijlee/dev/readme/config/process.js:\n   81  \n   82                  if (err) console.log(err);\n   83:                 post.schedulePost(duration.valueOf(), function() {\n   84                      console.log('Post ' + post.id + ' scheduled!');\n   85                  });\n\n/Users/ijlee/dev/readme/init.js:\n   94                  console.log('Scheduling post: ' + post);\n   95                  processArray.push(function(cb) {\n   96:                     post.schedulePost(moment(post.next_reminder).diff(moment()), cb);\n   97                  });\n   98              }\n\n4 matches across 3 files\n",
+			"settings":
+			{
+				"buffer_size": 18864,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "config/process.js",
+			"settings":
+			{
+				"buffer_size": 2302,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 400.0,
+		"height": 97.0,
 		"selected_items":
 		[
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
 			[
 				"ins",
 				"Package Control: Install Package"
@@ -536,10 +626,6 @@
 			],
 			[
 				"remove",
-				"Package Control: Remove Package"
-			],
-			[
-				"remov",
 				"Package Control: Remove Package"
 			],
 			[
@@ -561,10 +647,6 @@
 			[
 				"Space G",
 				"Package Control: Install Package"
-			],
-			[
-				"remo",
-				"Package Control: Remove Package"
 			],
 			[
 				"inst",
@@ -599,7 +681,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 457.0
+		"width": 475.0
 	},
 	"console":
 	{
@@ -624,6 +706,8 @@
 	},
 	"file_history":
 	[
+		"/Users/ijlee/dev/readme/init.js",
+		"/Users/ijlee/dev/readme/README.md",
 		"/Users/ijlee/dev/backdrop/backdrop.sublime-project",
 		"/Users/ijlee/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/ijlee/dev/backdrop/.codeintel/config",
@@ -679,7 +763,6 @@
 		"/Users/ijlee/dev/readme/public/css/views/index.css",
 		"/Users/ijlee/dev/readme/dropall.js",
 		"/Users/ijlee/dev/readme/app/controllers/posts.js",
-		"/Users/ijlee/dev/readme/README.md",
 		"/Users/ijlee/dev/readme/package.json",
 		"/Users/ijlee/dev/smallchat/node_modules/bower/node_modules/open/lib/open.js",
 		"/Users/ijlee/dev/readme/Notes",
@@ -750,12 +833,11 @@
 		"/Users/ijlee/dev/frag/public/js/services/collections.js",
 		"/Users/ijlee/dev/frag/public/js/controllers/collections.js",
 		"/Users/ijlee/dev/frag/config/middlewares/authorization.js",
-		"/Users/ijlee/dev/frag/config/routes.js",
-		"/Users/ijlee/dev/frag/app/controllers/users.js"
+		"/Users/ijlee/dev/frag/config/routes.js"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 38.0
 	},
 	"find_in_files":
 	{
@@ -779,6 +861,25 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"schedulePost",
+			"openStream",
+			"open request",
+			"stream open request sent",
+			"scheduled on worker process",
+			"schedulePost",
+			"Post_Email",
+			"emailPost",
+			"twitterStream",
+			"findById",
+			"findByid",
+			"twitterStream",
+			"emailPost",
+			"twitterStream",
+			"twitter_name",
+			"twitterStream",
+			"emailPost",
+			"schedulePost",
+			"openStream",
 			"undefined",
 			"send",
 			"hat",
@@ -887,26 +988,7 @@
 			"./post",
 			"post.js",
 			"'kue'",
-			"kue",
-			"user.email",
-			"openStream",
-			".faq",
-			"angular-bootstrap",
-			"jade",
-			"'User'",
-			"mongoose.model('User')",
-			"mongoose('User')",
-			"User",
-			"Post",
-			"User",
-			"Post",
-			"in",
-			"config/express",
-			"config",
-			"MEAN - A Modern Stack",
-			"MEAN",
-			"MEAN - A Modern Stack",
-			"appName"
+			"kue"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -940,8 +1022,590 @@
 	"groups":
 	[
 		{
+			"selected": 4,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "config/routes.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1208,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								681,
+								681
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "gruntfile.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3152,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2496,
+								2496
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 930.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/models/user.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2539,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								970,
+								970
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 397.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "public/js/config.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 613,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "public/js/directives.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 523,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								234,
+								234
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "worker.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5818,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1707,
+								1707
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 756.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/controllers/users.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5565,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3232,
+								3232
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1282.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "app/models/post.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3491,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1003,
+								1003
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 436.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 18864,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										149,
+										161
+									],
+									[
+										496,
+										508
+									],
+									[
+										738,
+										750
+									],
+									[
+										994,
+										1006
+									],
+									[
+										1325,
+										1334
+									],
+									[
+										1539,
+										1548
+									],
+									[
+										1904,
+										1917
+									],
+									[
+										2143,
+										2156
+									],
+									[
+										2567,
+										2579
+									],
+									[
+										2858,
+										2870
+									],
+									[
+										3044,
+										3056
+									],
+									[
+										3268,
+										3280
+									],
+									[
+										3463,
+										3475
+									],
+									[
+										3734,
+										3746
+									],
+									[
+										3955,
+										3967
+									],
+									[
+										4062,
+										4074
+									],
+									[
+										4307,
+										4319
+									],
+									[
+										4475,
+										4487
+									],
+									[
+										4786,
+										4799
+									],
+									[
+										5025,
+										5038
+									],
+									[
+										5462,
+										5471
+									],
+									[
+										5676,
+										5685
+									],
+									[
+										6041,
+										6054
+									],
+									[
+										6280,
+										6293
+									],
+									[
+										6781,
+										6789
+									],
+									[
+										7019,
+										7027
+									],
+									[
+										7388,
+										7396
+									],
+									[
+										7566,
+										7574
+									],
+									[
+										7790,
+										7798
+									],
+									[
+										8262,
+										8275
+									],
+									[
+										8699,
+										8708
+									],
+									[
+										9185,
+										9195
+									],
+									[
+										9400,
+										9410
+									],
+									[
+										9769,
+										9779
+									],
+									[
+										9984,
+										9994
+									],
+									[
+										10255,
+										10267
+									],
+									[
+										10602,
+										10614
+									],
+									[
+										10837,
+										10849
+									],
+									[
+										11139,
+										11151
+									],
+									[
+										11375,
+										11387
+									],
+									[
+										11722,
+										11734
+									],
+									[
+										11957,
+										11969
+									],
+									[
+										12259,
+										12271
+									],
+									[
+										12495,
+										12507
+									],
+									[
+										12842,
+										12854
+									],
+									[
+										13077,
+										13089
+									],
+									[
+										13379,
+										13391
+									],
+									[
+										13658,
+										13670
+									],
+									[
+										14005,
+										14017
+									],
+									[
+										14240,
+										14252
+									],
+									[
+										14542,
+										14554
+									],
+									[
+										14875,
+										14902
+									],
+									[
+										15369,
+										15381
+									],
+									[
+										15681,
+										15691
+									],
+									[
+										15912,
+										15922
+									],
+									[
+										16192,
+										16202
+									],
+									[
+										16275,
+										16285
+									],
+									[
+										16477,
+										16487
+									],
+									[
+										16784,
+										16794
+									],
+									[
+										17015,
+										17025
+									],
+									[
+										17295,
+										17305
+									],
+									[
+										17378,
+										17388
+									],
+									[
+										17580,
+										17590
+									],
+									[
+										17813,
+										17825
+									],
+									[
+										18160,
+										18172
+									],
+									[
+										18395,
+										18407
+									],
+									[
+										18729,
+										18741
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								18404,
+								18404
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 24,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 8115.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "config/process.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2302,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2283,
+								2283
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 567.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
 			]
 		}
 	],
