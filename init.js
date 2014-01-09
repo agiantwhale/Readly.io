@@ -61,7 +61,7 @@ var User = mongoose.model('User');
 User.initStreams();
 
 var Post = mongoose.model('Post');
-post.initJobs();
+Post.initJobs();
 
 /*
 async.series([
