@@ -21,8 +21,8 @@ module.exports = {
         callbackURL: "http://localhost:3000/auth/facebook/callback"
     },
     twitter: {
-        clientID: "yCse4wan08ilgIaVOarrA",
-        clientSecret: "NR5OJsrXoRGNI6uq6B1k9Owkmd9LoRmVj5uTps28obQ",
+        clientID: process.env.TWITTER_CONSUMER_KEY,
+        clientSecret: process.env.TWITTER_CONSUMER_SECRET,
         callbackURL: "http://readly.io/auth/twitter/callback"
     },
     github: {
