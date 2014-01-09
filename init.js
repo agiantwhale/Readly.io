@@ -57,6 +57,13 @@ var walk = function(path) {
     };
 walk(models_path);
 
+var User = mongoose.model('User');
+User.initStreams();
+
+var Post = mongoose.model('Post');
+post.initJobs();
+
+/*
 async.series([
 
 function(callback) {
@@ -104,3 +111,4 @@ function(callback) {
     console.log('Complete!');
     //process.exit();
 });
+*/
