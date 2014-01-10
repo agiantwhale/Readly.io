@@ -20,7 +20,7 @@ Il Jae Lee
 * [GitHub](https://github.com/smashthewindow)
 
 
-##License
+#### License
 The MIT License (MIT)
 
 Copyright (c) 2014 Il Jae Lee
